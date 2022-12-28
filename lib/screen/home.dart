@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:stud_board/screen/login.dart';
+import 'package:stud_board/screen/register_department.dart';
+import 'package:stud_board/screen/register_program.dart';
+import 'package:stud_board/screen/register_semester.dart';
+import 'package:stud_board/screen/register_session.dart';
+import 'package:stud_board/screen/register_subject.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,7 +20,7 @@ class _HomeState extends State<Home> {
       child: Scaffold(
         drawer: Drawer(
           child: ListView(
-            children: const [
+            children: [
               ListTile(
                 leading: Icon(Icons.home),
                 title: Text('Home'),
@@ -32,24 +38,43 @@ class _HomeState extends State<Home> {
                 title: Text('Transcript'),
               ),
               ListTile(
+                leading: Icon(Icons.star),
+                title: Text('Certificate'),
+              ),
+
+              ListTile(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RegisterDepartment())),
                 leading: Icon(Icons.home),
                 title: Text('UG-Depart'),
               ),
               ListTile(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RegisterProgram())),
                 leading: Icon(Icons.home),
                 title: Text('UG-Program'),
               ),
               ListTile(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RegisterSession())),
                 leading: Icon(Icons.home),
                 title: Text('UG-Session'),
               ),
               ListTile(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RegisterSemester())),
                 leading: Icon(Icons.home),
                 title: Text('UG-Semester'),
               ),
               ListTile(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RegisterSubject())),
                 leading: Icon(Icons.home),
-                title: Text('Home'),
+                title: Text('UG-Subject'),
               ),
               ListTile(
                 leading: Icon(Icons.group),
@@ -64,7 +89,8 @@ class _HomeState extends State<Home> {
                 title: Text('Semester'),
               ),
               Divider(height: 0),
-              ListTile(
+              ListTile(onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Login())),
                 leading: Icon(Icons.logout),
                 title: Text('Log Out'),
               ),
@@ -74,6 +100,9 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           title: Text('NFC IET STUDENT PORTAL'),
           backgroundColor: Color(0xFF7b2a23),
+        ),
+        body: Center(
+          child: Text('Will use Package to show Graph'),
         ),
       ),
     );

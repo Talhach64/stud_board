@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stud_board/screen/home.dart';
 import 'package:stud_board/screen/register.dart';
 import 'package:stud_board/widget/button.dart';
 import 'package:stud_board/widget/my_text_formfield.dart';
@@ -43,7 +44,9 @@ class _LoginState extends State<Login> {
             ),
             SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF7b2a23),
                 fixedSize: const Size(100, 40),

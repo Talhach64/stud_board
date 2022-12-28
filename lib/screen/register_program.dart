@@ -30,7 +30,7 @@ class _RegisterProgramState extends State<RegisterProgram> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register Department'),
+        title: Text('Register Program'),
         backgroundColor: Color(0xFF7b2a23),
       ),
       body: Padding(

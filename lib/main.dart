@@ -12,9 +12,8 @@ import 'package:stud_board/widget/my_text_formfield.dart';
 void main() {
   runApp( MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: RegisterSubject(),
-    //home: Login(),
-    //home: Register(),
+    home: Login(),
+
   ),
   );
 }
