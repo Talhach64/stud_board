@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:stud_board/screen/home.dart';
 import 'package:stud_board/screen/register.dart';
 import 'package:stud_board/widget/button.dart';
-import 'package:stud_board/widget/my_text_formfield.dart';
+import 'package:stud_board/widget/text_widget.dart';
 
+import '../constant/constant.dart';
 import '../widget/pass_widget.dart';
+
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -46,10 +48,11 @@ class _LoginState extends State<Login> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
+
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF7b2a23),
+                  backgroundColor:  primaryColor,
                   fixedSize: const Size(100, 40),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stud_board/widget/my_drop_down.dart';
-import 'package:stud_board/widget/my_text_formfield.dart';
+import 'package:stud_board/widget/text_widget.dart';
+
+import '../constant/constant.dart';
 
 class RegisterProgram extends StatefulWidget {
   const RegisterProgram({Key? key}) : super(key: key);
@@ -32,7 +34,7 @@ class _RegisterProgramState extends State<RegisterProgram> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Register Program'),
-          backgroundColor: Color(0xFF7b2a23),
+          backgroundColor: primaryColor,
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -54,7 +56,7 @@ class _RegisterProgramState extends State<RegisterProgram> {
                     hint: Text(
                       'Department',
                       style: TextStyle(
-                        color: Color(0xFF7b2a23),
+                        color: primaryColor,
                       ),
                     ),
 
@@ -96,7 +98,7 @@ class _RegisterProgramState extends State<RegisterProgram> {
                     hint: Text(
                       'Program Type',
                       style: TextStyle(
-                        color: Color(0xFF7b2a23),
+                        color: primaryColor,
                       ),
                     ),
 
@@ -130,7 +132,7 @@ class _RegisterProgramState extends State<RegisterProgram> {
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF7b2a23),
+                  backgroundColor:  primaryColor,
                   fixedSize: const Size(120, 40),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),

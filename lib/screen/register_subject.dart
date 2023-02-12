@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widget/my_text_formfield.dart';
+import '../constant/constant.dart';
+import '../widget/text_widget.dart';
 
 class RegisterSubject extends StatefulWidget {
   const RegisterSubject({Key? key}) : super(key: key);
@@ -51,7 +52,7 @@ class _RegisterSubjectState extends State<RegisterSubject> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Register Subject'),
-          backgroundColor: Color(0xFF7b2a23),
+          backgroundColor: primaryColor,
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -76,7 +77,7 @@ class _RegisterSubjectState extends State<RegisterSubject> {
                       hint: Text(
                         'Subject Title',
                         style: TextStyle(
-                          color: Color(0xFF7b2a23),
+                          color: primaryColor,
                         ),
                       ),
 
@@ -119,7 +120,7 @@ class _RegisterSubjectState extends State<RegisterSubject> {
                       hint: Text(
                         'Department',
                         style: TextStyle(
-                          color: Color(0xFF7b2a23),
+                          color: primaryColor,
                         ),
                       ),
 
@@ -161,7 +162,7 @@ class _RegisterSubjectState extends State<RegisterSubject> {
                       hint: Text(
                         'Program',
                         style: TextStyle(
-                          color: Color(0xFF7b2a23),
+                          color: primaryColor,
                         ),
                       ),
 
@@ -203,7 +204,7 @@ class _RegisterSubjectState extends State<RegisterSubject> {
                       hint: Text(
                         'Session',
                         style: TextStyle(
-                          color: Color(0xFF7b2a23),
+                          color: primaryColor,
                         ),
                       ),
 
@@ -246,7 +247,7 @@ class _RegisterSubjectState extends State<RegisterSubject> {
                       hint: Text(
                         'Semester Type',
                         style: TextStyle(
-                          color: Color(0xFF7b2a23),
+                          color: primaryColor,
                         ),
                       ),
 
@@ -289,7 +290,7 @@ class _RegisterSubjectState extends State<RegisterSubject> {
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF7b2a23),
+                    backgroundColor:  primaryColor,
                     fixedSize: const Size(120, 40),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),

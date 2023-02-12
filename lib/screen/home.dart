@@ -5,6 +5,9 @@ import 'package:stud_board/screen/register_program.dart';
 import 'package:stud_board/screen/register_semester.dart';
 import 'package:stud_board/screen/register_session.dart';
 import 'package:stud_board/screen/register_subject.dart';
+import 'package:stud_board/widget/list_tile.dart';
+
+import '../constant/constant.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -17,95 +20,25 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SafeArea(
-        child: Scaffold(
-          drawer: Drawer(
-            child: ListView(
-              children: [
-                ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text('Home'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.document_scanner),
-                  title: Text('Attendance'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.auto_graph),
-                  title: Text('Progress'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.newspaper),
-                  title: Text('Transcript'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.star),
-                  title: Text('Certificate'),
-                ),
-
-                ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegisterDepartment())),
-                  leading: Icon(Icons.home),
-                  title: Text('UG-Depart'),
-                ),
-                ListTile(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RegisterProgram())),
-                  leading: Icon(Icons.home),
-                  title: Text('UG-Program'),
-                ),
-                ListTile(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RegisterSession())),
-                  leading: Icon(Icons.home),
-                  title: Text('UG-Session'),
-                ),
-                ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegisterSemester())),
-                  leading: Icon(Icons.home),
-                  title: Text('UG-Semester'),
-                ),
-                ListTile(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RegisterSubject())),
-                  leading: Icon(Icons.home),
-                  title: Text('UG-Subject'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.group),
-                  title: Text('IG-Depart'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.group),
-                  title: Text('IG-Program'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.group),
-                  title: Text('Semester'),
-                ),
-                Divider(height: 0),
-                ListTile(onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Login())),
-                  leading: Icon(Icons.logout),
-                  title: Text('Log Out'),
-                ),
-              ],
-            ),
-          ),
-          appBar: AppBar(
-            title: Text('NFC IET STUDENT PORTAL'),
-            backgroundColor: Color(0xFF7b2a23),
-          ),
-          body: Center(
-            child: Text('Will use Package to show Graph'),
-          ),
-        ),
+      child: Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              const MyListTile(label: Text('Home'), Icon: Icon(Icons.home)),
+              const MyListTile(label: Text('Attendance'), Icon: Icon(Icons.document_scanner)),
+              const MyListTile(label: Text('Progress'), Icon: Icon(Icons.auto_graph)),
+              const MyListTile(label: Text('Transcript'), Icon: Icon(Icons.newspaper)),
+              const MyListTile(label: Text('Certificate'), Icon: Icon(Icons.star)),
+              MyListTile(label: const Text('Depart'), Icon: const Icon(Icons.home),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterDepartment()))),
+              MyListTile(label: const Text('Program'), Icon: const Icon(Icons.home),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterProgram()))),
+              MyListTile(label: const Text('Session'), Icon: const Icon(Icons.home),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterSession()))),
+              MyListTile(label: const Text('Semester'), Icon: const Icon(Icons.home),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterSemester()))),
+              MyListTile(label: const Text('Subject'), Icon: const Icon(Icons.home),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterSubject()))),
+              const Divider(height: 0),
+              MyListTile(label: const Text('Log Out'), Icon: const Icon(Icons.logout),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => Login())))
+            ],),),
+        appBar: AppBar(title: const Text('NFC IET STUDENT PORTAL'), backgroundColor: primaryColor,),
+        body: const Center(child: Text('Will use Package to show Graph')),
       ),
     );
   }

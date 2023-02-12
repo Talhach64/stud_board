@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constant/constant.dart';
 import 'login.dart';
 
 class Register extends StatelessWidget {
@@ -28,7 +29,7 @@ class Register extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Color(0xFF7b2a23),
+                    color: primaryColor,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: const Center(
@@ -54,7 +55,7 @@ class Register extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Color(0xFF7b2a23),
+                    color: primaryColor,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: const Center(
@@ -90,7 +91,7 @@ class Register extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF7b2a23),
+                  backgroundColor:  primaryColor,
                   fixedSize: const Size(100, 40),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),

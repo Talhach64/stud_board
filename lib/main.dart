@@ -7,7 +7,7 @@ import 'package:stud_board/screen/register_semester.dart';
 
 import 'package:stud_board/screen/register_session.dart';
 import 'package:stud_board/screen/register_subject.dart';
-import 'package:stud_board/widget/my_text_formfield.dart';
+import 'package:stud_board/widget/text_widget.dart';
 
 void main() {
   runApp( MaterialApp(

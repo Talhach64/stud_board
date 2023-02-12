@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widget/my_text_formfield.dart';
+import '../constant/constant.dart';
+import '../widget/text_widget.dart';
 
 class RegisterSession extends StatefulWidget {
   const RegisterSession({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class _RegisterSessionState extends State<RegisterSession> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Register Session'),
-          backgroundColor: Color(0xFF7b2a23),
+          backgroundColor: primaryColor,
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -59,7 +60,7 @@ class _RegisterSessionState extends State<RegisterSession> {
                       hint: Text(
                         'Session Type',
                         style: TextStyle(
-                          color: Color(0xFF7b2a23),
+                          color: primaryColor,
                         ),
                       ),
 
@@ -107,7 +108,7 @@ class _RegisterSessionState extends State<RegisterSession> {
                       hint: Text(
                         'Department',
                         style: TextStyle(
-                          color: Color(0xFF7b2a23),
+                          color: primaryColor,
                         ),
                       ),
 
@@ -149,7 +150,7 @@ class _RegisterSessionState extends State<RegisterSession> {
                       hint: Text(
                         'Program',
                         style: TextStyle(
-                          color: Color(0xFF7b2a23),
+                          color: primaryColor,
                         ),
                       ),
 
@@ -183,7 +184,7 @@ class _RegisterSessionState extends State<RegisterSession> {
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF7b2a23),
+                    backgroundColor:  primaryColor,
                     fixedSize: const Size(120, 40),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),

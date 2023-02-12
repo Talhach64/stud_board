@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stud_board/widget/my_text_formfield.dart';
+import 'package:stud_board/widget/text_widget.dart';
+
+import '../constant/constant.dart';
 
 class RegisterDepartment extends StatefulWidget {
   const RegisterDepartment({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class _RegisterDepartmentState extends State<RegisterDepartment> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Register Department'),
-          backgroundColor: Color(0xFF7b2a23),
+          backgroundColor: primaryColor,
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -37,7 +39,7 @@ class _RegisterDepartmentState extends State<RegisterDepartment> {
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF7b2a23),
+                      backgroundColor:  primaryColor,
                       fixedSize: const Size(120, 40),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
