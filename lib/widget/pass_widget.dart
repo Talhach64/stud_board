@@ -26,9 +26,7 @@ class _MyTextFormFieldState extends State<MyPassField> {
         // keyboardType: keyboard,
         //  validator: validator,
         decoration: InputDecoration(
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: primaryColor),
-          ),
+
           labelStyle: const TextStyle(color: primaryColor),
           hintText: widget.hint,
           labelText: widget.label,
@@ -41,8 +39,12 @@ class _MyTextFormFieldState extends State<MyPassField> {
                   )
                 : const Icon(Icons.visibility, color: primaryColor),
           ),
-          border: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: primaryColor),
+          ),
+          enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0),
+            borderSide: const BorderSide(color: primaryColor),
           ),
         ),
       ),

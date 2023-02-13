@@ -12,8 +12,8 @@ class RegisterProgram extends StatefulWidget {
 }
 
 class _RegisterProgramState extends State<RegisterProgram> {
-  String? departvalue;
-  String? programvalue;
+  String? departValue;
+  String? programValue;
 
   final department = [
     'Computer Science',
@@ -33,27 +33,28 @@ class _RegisterProgramState extends State<RegisterProgram> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Register Program'),
+          title: const Text('Register Program'),
           backgroundColor: primaryColor,
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              Text(
+              const Text(
                 'Enter Program Details',
                 style: TextStyle(fontSize: 25),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                padding: EdgeInsets.all(5),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(width: 1)),
+                  borderRadius: BorderRadius.circular(5.0),
+                  border: Border.all(width: 1),
+                ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton(
-                    hint: Text(
+                    hint: const Text(
                       'Department',
                       style: TextStyle(
                         color: primaryColor,
@@ -62,7 +63,7 @@ class _RegisterProgramState extends State<RegisterProgram> {
 
                     isExpanded: true,
                     // Initial Value
-                    value: departvalue,
+                    value: departValue,
 
                     // Down Arrow Icon
                     icon: const Icon(Icons.keyboard_arrow_down),
@@ -74,28 +75,30 @@ class _RegisterProgramState extends State<RegisterProgram> {
                         child: Text(items),
                       );
                     }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
+                    // After selecting the desired option,it will change button value to selected value
                     onChanged: (String? newValue) {
                       setState(
                         () {
-                          departvalue = newValue!;
+                          departValue = newValue!;
                         },
                       );
                     },
                   ),
                 ),
               ),
-              MyTextFormField(label: 'Program Titile', hint: 'Program Titile'),
+              const MyTextFormField(
+                  label: 'Program Titile', hint: 'Program Titile'),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                padding: EdgeInsets.all(5),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(width: 1)),
+                  borderRadius: BorderRadius.circular(5.0),
+                  border: Border.all(width: 1),
+                ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton(
-                    hint: Text(
+
+                    hint: const Text(
                       'Program Type',
                       style: TextStyle(
                         color: primaryColor,
@@ -104,7 +107,7 @@ class _RegisterProgramState extends State<RegisterProgram> {
 
                     isExpanded: true,
                     // Initial Value
-                    value: programvalue,
+                    value: programValue,
 
                     // Down Arrow Icon
                     icon: const Icon(Icons.keyboard_arrow_down),
@@ -116,23 +119,23 @@ class _RegisterProgramState extends State<RegisterProgram> {
                         child: Text(items),
                       );
                     }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
+                    // After selecting the desired option,it will change button value to selected value
                     onChanged: (String? newValue) {
                       setState(
                         () {
-                          programvalue = newValue!;
+                          programValue = newValue!;
                         },
                       );
                     },
                   ),
                 ),
               ),
-              MyTextFormField(label: "Starting Date", hint: 'Starting Date'),
+              const MyTextFormField(
+                  label: "Starting Date", hint: 'Starting Date'),
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:  primaryColor,
+                  backgroundColor: primaryColor,
                   fixedSize: const Size(120, 40),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
