@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stud_board/widget/my_drop_down.dart';
+import 'package:stud_board/api_services/api_services.dart';
+import 'package:stud_board/demo_APIservies.dart';
 import 'package:stud_board/widget/text_widget.dart';
 
 import '../constant/constant.dart';
@@ -32,7 +33,7 @@ class _RegisterProgramState extends State<RegisterProgram> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: GestureDetector(
-        onTap: ()=> FocusScope.of(context).requestFocus(FocusNode()),
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Register Program'),
@@ -100,7 +101,6 @@ class _RegisterProgramState extends State<RegisterProgram> {
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
-
                         hint: const Text(
                           'Program Type',
                           style: TextStyle(
@@ -146,7 +146,8 @@ class _RegisterProgramState extends State<RegisterProgram> {
                     ),
                     child: const Text(
                       'REGISTER',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                   ),
                 ],
