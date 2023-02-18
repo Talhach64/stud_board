@@ -4,8 +4,16 @@ import '../constant/constant.dart';
 
 class MyPassField extends StatefulWidget {
   final label, hint;
+  TextEditingController controller;
+  TextInputType keyboard;
 
-  MyPassField({Key? key, required this.label, required this.hint})
+
+  MyPassField(
+      {Key? key,
+      required this.label,
+      required this.hint,
+      required this.controller,
+      required this.keyboard})
       : super(key: key);
 
   @override
@@ -18,15 +26,14 @@ class _MyTextFormFieldState extends State<MyPassField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(20.0),
       child: TextFormField(
         obscureText: obscure,
         //autovalidateMode: AutovalidateMode.onUserInteraction,
-        // controller: controller,
-        // keyboardType: keyboard,
+        controller: widget.controller,
+        keyboardType: widget.keyboard,
         //  validator: validator,
         decoration: InputDecoration(
-
           labelStyle: const TextStyle(color: primaryColor),
           hintText: widget.hint,
           labelText: widget.label,

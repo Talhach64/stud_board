@@ -5,10 +5,10 @@ import 'package:hive/hive.dart';
 class APIService {
   final Dio _dio = Dio();
 
-  Future<String> _getToken() async {
+  Future<String> getToken() async {
     final box = await Hive.openBox('auth');
     final token = box.get('token');
-    return token;
+    return token.toString();
   }
 
   Future<void> setToken(String token) async {
@@ -22,7 +22,8 @@ class APIService {
         route,
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${await _getToken()}',
+            'Authorization': 'Bearer ${await getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
           },
         ),
       );
@@ -51,7 +52,8 @@ class APIService {
         route,
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${await _getToken()}',
+            'Authorization': 'Bearer ${await getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
           },
         ),
       );
@@ -73,20 +75,31 @@ class APIService {
     }
   }
 
-  Future<void> post(String route, Map<String, dynamic> data) async {
-    try {
-      await _dio.post(
-        route,
+  Future<dynamic> post(Map<String, dynamic> data) async {
+
+      Response res = await _dio.post(
+        "https://nfc-master-api.onrender.com/api/login",
         data: data,
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${await _getToken()}',
+            'Authorization': 'Bearer ${await getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
           },
         ),
       );
-    } catch (error) {
-      print(error);
-    }
+      switch (res.statusCode) {
+        case 202:
+          return res.data['token'];
+        case 401:
+          throw Exception('Unauthorized');
+        case 404:
+          throw Exception('Not found');
+        case 500:
+          throw Exception('Internal server error');
+        default:
+          throw Exception('An unexpected error occurred');
+      }
+
   }
 
   Future<void> put(String route, Map<String, dynamic> data) async {
@@ -96,7 +109,8 @@ class APIService {
         data: data,
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${await _getToken()}',
+            'Authorization': 'Bearer ${await getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
           },
         ),
       );
@@ -111,7 +125,8 @@ class APIService {
         route,
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${await _getToken()}',
+            'Authorization': 'Bearer ${await getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
           },
         ),
       );
