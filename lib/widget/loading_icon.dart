@@ -10,7 +10,8 @@ class LoadingIcon extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(height: 25, width: 25, child: CircularProgressIndicator()),
+          const SizedBox(height: 25, width: 25, child: CircularProgressIndicator()),
+          const SizedBox(height: 20),
           Text(label!),
         ],
       ),

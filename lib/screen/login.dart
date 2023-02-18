@@ -1,11 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:stud_board/api_models/login_model.dart';
 import 'package:stud_board/api_services/api_services.dart';
-import 'package:stud_board/demo_APIservies.dart';
 import 'package:stud_board/screen/home.dart';
 import 'package:stud_board/screen/register.dart';
-import 'package:stud_board/widget/button.dart';
 import 'package:stud_board/widget/loading_icon.dart';
 import 'package:stud_board/widget/text_widget.dart';
 
@@ -24,6 +21,13 @@ class _LoginState extends State<Login> {
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,39 +77,30 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 20.0),
                   ElevatedButton(
                     onPressed: () async {
-                      // if (_formKey.currentState!.validate()) {
-                      //   showDialog(
-                      //       context: context,
-                      //       builder: (context) {
-                      //         return LoadingIcon(label: "Logging In...");
-                      //       });
-                      //   var token = await APIService().post(
-                      //       "https://nfc-master-api.onrender.com/api/login",
-                      //       LoginModel(
-                      //               email: "2k19bscs325@undergrad.nfciet.edu.pk",
-                      //               password: "admin123")
-                      //           .toJson());
-                      //   print("token");
-                      // } else {
-                      //   setState(() {});
-                      // }
-
-                      var token = await APIService().post( LoginModel(
-                          email: "2k19bscs325@undergrad.nfciet.edu.pk",
-                          password: "admin123")
-                          .toJson());
-
-                      await APIService().setToken(token);
-                      var p = await APIService().getToken();
-                      print (' token is $p');
-
-
-
-
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => const Home()));
+                      if (_formKey.currentState!.validate()) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return LoadingIcon(label: "Logging In...");
+                            });
+                        var token = await APIService().post(
+                            "login",
+                            LoginModel(
+                                    email:
+                                        "2k19bscs325@undergrad.nfciet.edu.pk",
+                                    password: "admin123")
+                                .toJson());
+                        await APIService().setToken(token);
+                        var person = await APIService().getOne("get-user");
+                        await APIService().setPersonID(person["_id"]);
+                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Home()));
+                      } else {
+                        setState(() {});
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
@@ -128,5 +123,4 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
 }
