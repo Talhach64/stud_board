@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stud_board/demo/page_view_demo.dart';
+import 'package:stud_board/screen/create_account/register_parent.dart';
 
 import '../constant/constant.dart';
 import 'login.dart';
@@ -25,7 +27,9 @@ class Register extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: GestureDetector(
-               // onTap: onTap,
+
+                onTap: ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=> MyPageView())),
+
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -51,7 +55,7 @@ class Register extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: GestureDetector(
-               // onTap: onTap,
+               onTap: ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=>const RegisterParent())),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(

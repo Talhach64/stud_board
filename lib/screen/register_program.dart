@@ -90,8 +90,8 @@ class _RegisterProgramState extends State<RegisterProgram> {
                       ),
                     ),
                   ),
-                   MyTextFormField(
-                      label: 'Program Titile', hint: 'Program Titile'),
+                  MyTextFormField(
+                      label: 'Program Title', hint: 'Program Title'),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     padding: const EdgeInsets.all(5),
@@ -116,10 +116,10 @@ class _RegisterProgramState extends State<RegisterProgram> {
                         icon: const Icon(Icons.keyboard_arrow_down),
 
                         // Array list of items
-                        items: item2.map((String items) {
+                        items: item2.map((String e) {
                           return DropdownMenuItem(
-                            value: items,
-                            child: Text(items),
+                            value: e,
+                            child: Text(e),
                           );
                         }).toList(),
                         // After selecting the desired option,it will change button value to selected value
@@ -133,7 +133,7 @@ class _RegisterProgramState extends State<RegisterProgram> {
                       ),
                     ),
                   ),
-                   MyTextFormField(
+                  MyTextFormField(
                       label: "Starting Date", hint: 'Starting Date'),
                   ElevatedButton(
                     onPressed: () {},

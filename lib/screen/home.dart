@@ -4,7 +4,9 @@ import 'package:stud_board/screen/register_department.dart';
 import 'package:stud_board/screen/register_program.dart';
 import 'package:stud_board/screen/register_semester.dart';
 import 'package:stud_board/screen/register_session.dart';
+import 'package:stud_board/screen/register_student_in_subject.dart';
 import 'package:stud_board/screen/register_subject.dart';
+import 'package:stud_board/screen/register_teacher_in_subject.dart';
 import 'package:stud_board/widget/list_tile.dart';
 
 import '../constant/constant.dart';
@@ -34,6 +36,8 @@ class _HomeState extends State<Home> {
               MyListTile(label: const Text('Session'), Icon: const Icon(Icons.home),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterSession()))),
               MyListTile(label: const Text('Semester'), Icon: const Icon(Icons.home),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterSemester()))),
               MyListTile(label: const Text('Subject'), Icon: const Icon(Icons.home),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterSubject()))),
+              MyListTile(label: const Text('Student'), Icon: const Icon(Icons.home),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterStudentInSubject()))),
+              MyListTile(label: const Text('Teacher'), Icon: const Icon(Icons.home),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterTeacherInSubject()))),
               const Divider(height: 0),
               MyListTile(label: const Text('Log Out'), Icon: const Icon(Icons.logout),onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => Login())))
             ],),),

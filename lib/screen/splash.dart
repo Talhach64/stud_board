@@ -16,7 +16,7 @@ class Splash extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) =>  Login()));
-        }, child: const Text('go to login page')),
+        }, child: const Text('Get Started')),
       )
       ,
 
