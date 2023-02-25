@@ -17,6 +17,7 @@ class _RegisterParentState extends State<RegisterStudent> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool click = false;
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
   @override
