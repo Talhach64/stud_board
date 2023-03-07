@@ -3,6 +3,7 @@ import 'package:stud_board/demo/page_view_demo.dart';
 import 'package:stud_board/screen/create_account/register_parent.dart';
 
 import '../constant/constant.dart';
+import 'create_account/register_student.dart';
 import 'login.dart';
 
 class Register extends StatelessWidget {
@@ -28,7 +29,7 @@ class Register extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: GestureDetector(
 
-                onTap: ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=> MyPageView())),
+                onTap: ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=> RegisterStudent())),
 
                 child: Container(
                   width: double.infinity,

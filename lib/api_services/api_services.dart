@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 
+import '../api_models/departments_model.dart';
+
 class APIService {
   final Dio _dio = Dio();
   final apiUrl = "https://nfc-master-api.onrender.com/api" ;
@@ -41,8 +43,8 @@ class APIService {
       );
       switch (response.statusCode) {
         case 200:
-          List<dynamic> decodedData = jsonDecode(response.data);
-          return decodedData;
+          List<dynamic> data = response.data;
+          return data;
         case 401:
           throw Exception('Unauthorized');
         case 404:
