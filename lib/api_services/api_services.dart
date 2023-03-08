@@ -30,6 +30,11 @@ class APIService {
     return id;
   }
 
+  Future<void> deleteID(String id) async {
+    final box = await Hive.openBox('auth');
+    await box.delete(id);
+  }
+
   Future<List<dynamic>?> getAll(String route) async {
     try {
       final response = await _dio.get(

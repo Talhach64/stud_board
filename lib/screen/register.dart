@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stud_board/demo/page_view_demo.dart';
 import 'package:stud_board/screen/create_account/register_parent.dart';
+import 'package:stud_board/widget/img.dart';
 
 import '../constant/constant.dart';
 import 'create_account/register_student.dart';
@@ -17,9 +18,7 @@ class Register extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 5.0),
-              const Image(
-                image: AssetImage("images/nfc_logo.jpg"),
-              ),
+              const Img(),
               const Text(
                 'Register As',
                 style: TextStyle(fontSize: 35),

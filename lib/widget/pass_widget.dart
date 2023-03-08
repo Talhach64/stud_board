@@ -41,10 +41,10 @@ class _MyTextFormFieldState extends State<MyPassField> {
             onTap: () => setState(() => obscure = !obscure),
             child: obscure
                 ? const Icon(
-                    Icons.visibility_off,
+                    Icons.visibility,
                     color: primaryColor,
                   )
-                : const Icon(Icons.visibility, color: primaryColor),
+                : const Icon(Icons.visibility_off, color: primaryColor),
           ),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: primaryColor),

@@ -3,6 +3,7 @@ import 'package:stud_board/api_models/login_model.dart';
 import 'package:stud_board/api_services/api_services.dart';
 import 'package:stud_board/screen/home.dart';
 import 'package:stud_board/screen/register.dart';
+import 'package:stud_board/widget/img.dart';
 import 'package:stud_board/widget/loading_icon.dart';
 import 'package:stud_board/widget/text_widget.dart';
 
@@ -23,6 +24,12 @@ class _LoginState extends State<Login> {
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
   @override
+  void initState() {
+    emailController.text = "2k19bscs340@undergrad.nfciet.edu.pk";
+    passwordController.text = "admin123";
+    super.initState();
+  }
+  @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
@@ -42,9 +49,7 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: [
                   const SizedBox(height: 5.0),
-                  const Image(
-                    image: AssetImage("images/nfc_logo.jpg"),
-                  ),
+                  Img(),
                   const Text(
                     'Sign In',
                     style: TextStyle(fontSize: 35),
@@ -87,8 +92,8 @@ class _LoginState extends State<Login> {
                             "login",
                             LoginModel(
                                     email:
-                                        "2k19bscs325@undergrad.nfciet.edu.pk",
-                                    password: "admin123")
+                                        emailController.text,
+                                    password: passwordController.text)
                                 .toJson());
                         await APIService().setToken(token);
                         var person = await APIService().getOne("get-user");

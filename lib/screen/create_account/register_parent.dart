@@ -38,9 +38,6 @@ class _RegisterParentState extends State<RegisterParent> {
               child: Column(
                 children: [
                   const SizedBox(height: 5.0),
-                  const Image(
-                    image: AssetImage("images/nfc_logo.jpg"),
-                  ),
                   const Text(
                     'Enter Parent Info',
                     style: TextStyle(fontSize: 35),
