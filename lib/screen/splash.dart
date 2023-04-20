@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stud_board/screen/login.dart';
 
-import 'home.dart';
+import 'student_screens/student_home.dart';
 
 class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);

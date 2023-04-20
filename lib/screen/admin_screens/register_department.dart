@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stud_board/widget/text_widget.dart';
 
-import '../constant/constant.dart';
+import '../../constant/constant.dart';
 
 class RegisterDepartment extends StatefulWidget {
   const RegisterDepartment({Key? key}) : super(key: key);

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../constant/constant.dart';
-import '../widget/text_widget.dart';
+import '../../constant/constant.dart';
+import '../../widget/text_widget.dart';
 
-class RegisterSemester extends StatefulWidget {
-  const RegisterSemester({Key? key}) : super(key: key);
+class RegisterSubject extends StatefulWidget {
+  const RegisterSubject({Key? key}) : super(key: key);
 
   @override
-  State<RegisterSemester> createState() => _RegisterSemesterState();
+  State<RegisterSubject> createState() => _RegisterSubjectState();
 }
 
-class _RegisterSemesterState extends State<RegisterSemester> {
+class _RegisterSubjectState extends State<RegisterSubject> {
   String? departvalue;
   String? semesterTypevalue;
   String? programvalue;
-  String? semesterTitlevalue;
+  String? subjectTypevalue;
   String? sessionvalue;
 
   final department = [
@@ -23,8 +23,14 @@ class _RegisterSemesterState extends State<RegisterSemester> {
     'Electrical engineering'
   ];
   final semesterType = [
-    'Summer',
-    'Winter'
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
   ];
   final program = [
     'BS',
@@ -35,15 +41,10 @@ class _RegisterSemesterState extends State<RegisterSemester> {
     '2k20',
     '2k21',
   ];
-  final semesterTitle = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
+  final subjectType = [
+    'Core',
+    'Elective',
+    'Supply',
   ];
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class _RegisterSemesterState extends State<RegisterSemester> {
         onTap: ()=> FocusScope.of(context).requestFocus(FocusNode()),
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Register Semester'),
+            title: Text('Register Subject'),
             backgroundColor: primaryColor,
           ),
           body: SingleChildScrollView(
@@ -61,10 +62,12 @@ class _RegisterSemesterState extends State<RegisterSemester> {
               child: Column(
                 children: [
                   Text(
-                    'Enter Semester Details',
+                    'Enter Subject Details',
                     style: TextStyle(fontSize: 25),
                   ),
-                  SizedBox(height: 10),
+                  MyTextFormField(label: "Sunject Code", hint: 'Sunject Code'),
+                  MyTextFormField(label: "Subject Title", hint: 'Subject Title'),
+
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     padding: EdgeInsets.all(5),
@@ -74,7 +77,7 @@ class _RegisterSemesterState extends State<RegisterSemester> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
                         hint: Text(
-                          'Semester Title',
+                          'Subject Title',
                           style: TextStyle(
                             color: primaryColor,
                           ),
@@ -82,13 +85,13 @@ class _RegisterSemesterState extends State<RegisterSemester> {
 
                         isExpanded: true,
                         // Initial Value
-                        value: semesterTitlevalue,
+                        value: subjectTypevalue,
 
                         // Down Arrow Icon
                         icon: const Icon(Icons.keyboard_arrow_down),
 
                         // Array list of items
-                        items: semesterTitle.map((String items) {
+                        items: subjectType.map((String items) {
                           return DropdownMenuItem(
                             value: items,
                             child: Text(items),
@@ -99,7 +102,7 @@ class _RegisterSemesterState extends State<RegisterSemester> {
                         onChanged: (String? newValue) {
                           setState(
                                 () {
-                                  semesterTitlevalue = newValue!;
+                                  subjectTypevalue = newValue!;
                             },
                           );
                         },
@@ -107,49 +110,7 @@ class _RegisterSemesterState extends State<RegisterSemester> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(width: 1)),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        hint: Text(
-                          'Semester Type',
-                          style: TextStyle(
-                            color: primaryColor,
-                          ),
-                        ),
 
-                        isExpanded: true,
-                        // Initial Value
-                        value: semesterTypevalue,
-
-                        // Down Arrow Icon
-                        icon: const Icon(Icons.keyboard_arrow_down),
-
-                        // Array list of items
-                        items: semesterType.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                        // After selecting the desired option,it will
-                        // change button value to selected value
-                        onChanged: (String? newValue) {
-                          setState(
-                                () {
-                                  semesterTypevalue = newValue!;
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  MyTextFormField(label: "Starting Year", hint: 'Starting Year'),
-                  MyTextFormField(label: "Ending Year", hint: 'Ending Year'),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     padding: EdgeInsets.all(5),
@@ -243,7 +204,7 @@ class _RegisterSemesterState extends State<RegisterSemester> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
                         hint: Text(
-                          'Department',
+                          'Session',
                           style: TextStyle(
                             color: primaryColor,
                           ),
@@ -268,7 +229,7 @@ class _RegisterSemesterState extends State<RegisterSemester> {
                         onChanged: (String? newValue) {
                           setState(
                                 () {
-                                  sessionvalue = newValue!;
+                              sessionvalue = newValue!;
                             },
                           );
                         },
@@ -276,10 +237,62 @@ class _RegisterSemesterState extends State<RegisterSemester> {
                     ),
                   ),
                   SizedBox(height: 10),
+
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        border: Border.all(width: 1)),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        hint: Text(
+                          'Semester Type',
+                          style: TextStyle(
+                            color: primaryColor,
+                          ),
+                        ),
+
+                        isExpanded: true,
+                        // Initial Value
+                        value: semesterTypevalue,
+
+                        // Down Arrow Icon
+                        icon: const Icon(Icons.keyboard_arrow_down),
+
+                        // Array list of items
+                        items: semesterType.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                        // After selecting the desired option,it will
+                        // change button value to selected value
+                        onChanged: (String? newValue) {
+                          setState(
+                                () {
+                              semesterTypevalue = newValue!;
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+
+                  Text(
+                    'Theory Credit Hour Slider',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    'Lab Credit Hour Slider',
+                    style: TextStyle(fontSize: 20),
+                  ),
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
+                      backgroundColor:  primaryColor,
                       fixedSize: const Size(120, 40),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),

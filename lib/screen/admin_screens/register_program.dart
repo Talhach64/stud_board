@@ -3,7 +3,7 @@ import 'package:stud_board/api_services/api_services.dart';
 import 'package:stud_board/demo/demo_APIservies.dart';
 import 'package:stud_board/widget/text_widget.dart';
 
-import '../constant/constant.dart';
+import '../../constant/constant.dart';
 
 class RegisterProgram extends StatefulWidget {
   const RegisterProgram({Key? key}) : super(key: key);

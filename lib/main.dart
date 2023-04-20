@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:stud_board/screen/home.dart';
-import 'package:stud_board/screen/login.dart';
+import 'package:stud_board/screen/student_screens/student_home.dart';
 import 'package:stud_board/screen/splash.dart';
 
 import 'api_services/api_services.dart';
@@ -16,7 +15,7 @@ void main() async {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: (id?.isNotEmpty ?? false) ? const Home() : const Splash(),
+      home: (id?.isNotEmpty ?? false) ? const StudentHome() : const Splash(),
     ),
   );
 }

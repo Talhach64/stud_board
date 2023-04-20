@@ -1,14 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:stud_board/api_models/login_model.dart';
 import 'package:stud_board/api_services/api_services.dart';
-import 'package:stud_board/screen/home.dart';
+import 'package:stud_board/screen/student_screens/student_home.dart';
 import 'package:stud_board/screen/register.dart';
+import 'package:stud_board/screen/teacher_screens/teacher_home.dart';
 import 'package:stud_board/widget/img.dart';
 import 'package:stud_board/widget/loading_icon.dart';
 import 'package:stud_board/widget/text_widget.dart';
 
 import '../constant/constant.dart';
 import '../widget/pass_widget.dart';
+import 'admin_screens/admin_home.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -99,10 +103,22 @@ class _LoginState extends State<Login> {
                         var person = await APIService().getOne("get-user");
                         await APIService().setPersonID(person["_id"]);
                         Navigator.pop(context);
-                        Navigator.pushReplacement(
+                        print(person['role']);
+                        if(person['role']=="Student")
+                          { Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Home()));
+                                builder: (context) => const StudentHome()));}
+                        else if(person['role']=="Teacher")
+                        { Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TeacherHome()));}
+                        else if(person['role']=="Admin")
+                        { Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AdminHome()));}
                       } else {
                         setState(() {});
                       }

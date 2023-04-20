@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../constant/constant.dart';
+
+import '../../constant/constant.dart';
+
 
 class RegisterTeacherInSubject extends StatelessWidget {
   const RegisterTeacherInSubject({Key? key}) : super(key: key);

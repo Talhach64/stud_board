@@ -1,50 +1,32 @@
 import 'package:flutter/material.dart';
 
-import '../constant/constant.dart';
-import '../widget/text_widget.dart';
+import '../../constant/constant.dart';
+import '../../widget/text_widget.dart';
 
-class RegisterSubject extends StatefulWidget {
-  const RegisterSubject({Key? key}) : super(key: key);
+class RegisterSession extends StatefulWidget {
+  const RegisterSession({Key? key}) : super(key: key);
 
   @override
-  State<RegisterSubject> createState() => _RegisterSubjectState();
+  State<RegisterSession> createState() => _RegisterSessionState();
 }
 
-class _RegisterSubjectState extends State<RegisterSubject> {
+class _RegisterSessionState extends State<RegisterSession> {
   String? departvalue;
-  String? semesterTypevalue;
-  String? programvalue;
-  String? subjectTypevalue;
   String? sessionvalue;
+  String? programvalue;
 
   final department = [
     'Computer Science',
     'Mechanical Engineering',
     'Electrical engineering'
   ];
-  final semesterType = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
+  final sessionType = [
+    'Spring',
+    'Fall'
   ];
   final program = [
     'BS',
     'MS'
-  ];
-  final session = [
-    '2k19',
-    '2k20',
-    '2k21',
-  ];
-  final subjectType = [
-    'Core',
-    'Elective',
-    'Supply',
   ];
   @override
   Widget build(BuildContext context) {
@@ -53,7 +35,7 @@ class _RegisterSubjectState extends State<RegisterSubject> {
         onTap: ()=> FocusScope.of(context).requestFocus(FocusNode()),
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Register Subject'),
+            title: Text('Register Session'),
             backgroundColor: primaryColor,
           ),
           body: SingleChildScrollView(
@@ -62,11 +44,12 @@ class _RegisterSubjectState extends State<RegisterSubject> {
               child: Column(
                 children: [
                   Text(
-                    'Enter Subject Details',
+                    'Enter Session Details',
                     style: TextStyle(fontSize: 25),
                   ),
-                  MyTextFormField(label: "Sunject Code", hint: 'Sunject Code'),
-                  MyTextFormField(label: "Subject Title", hint: 'Subject Title'),
+                  SizedBox(height: 10),
+                  MyTextFormField(label: 'Session Title', hint: 'Session Titile'),
+
 
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
@@ -77,7 +60,7 @@ class _RegisterSubjectState extends State<RegisterSubject> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
                         hint: Text(
-                          'Subject Title',
+                          'Session Type',
                           style: TextStyle(
                             color: primaryColor,
                           ),
@@ -85,13 +68,13 @@ class _RegisterSubjectState extends State<RegisterSubject> {
 
                         isExpanded: true,
                         // Initial Value
-                        value: subjectTypevalue,
+                        value: sessionvalue,
 
                         // Down Arrow Icon
                         icon: const Icon(Icons.keyboard_arrow_down),
 
                         // Array list of items
-                        items: subjectType.map((String items) {
+                        items: sessionType.map((String items) {
                           return DropdownMenuItem(
                             value: items,
                             child: Text(items),
@@ -102,14 +85,19 @@ class _RegisterSubjectState extends State<RegisterSubject> {
                         onChanged: (String? newValue) {
                           setState(
                                 () {
-                                  subjectTypevalue = newValue!;
+                              sessionvalue = newValue!;
                             },
                           );
                         },
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+
+                  MyTextFormField(label: "Starting Year", hint: 'Starting Year'),
+
+
+                  MyTextFormField(label: "Ending Year", hint: 'Ending Year'),
+
 
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
@@ -187,7 +175,7 @@ class _RegisterSubjectState extends State<RegisterSubject> {
                         onChanged: (String? newValue) {
                           setState(
                                 () {
-                              programvalue = newValue!;
+                                  programvalue = newValue!;
                             },
                           );
                         },
@@ -195,100 +183,6 @@ class _RegisterSubjectState extends State<RegisterSubject> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(width: 1)),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        hint: Text(
-                          'Session',
-                          style: TextStyle(
-                            color: primaryColor,
-                          ),
-                        ),
-
-                        isExpanded: true,
-                        // Initial Value
-                        value: sessionvalue,
-
-                        // Down Arrow Icon
-                        icon: const Icon(Icons.keyboard_arrow_down),
-
-                        // Array list of items
-                        items: session.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                        // After selecting the desired option,it will
-                        // change button value to selected value
-                        onChanged: (String? newValue) {
-                          setState(
-                                () {
-                              sessionvalue = newValue!;
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(width: 1)),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        hint: Text(
-                          'Semester Type',
-                          style: TextStyle(
-                            color: primaryColor,
-                          ),
-                        ),
-
-                        isExpanded: true,
-                        // Initial Value
-                        value: semesterTypevalue,
-
-                        // Down Arrow Icon
-                        icon: const Icon(Icons.keyboard_arrow_down),
-
-                        // Array list of items
-                        items: semesterType.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                        // After selecting the desired option,it will
-                        // change button value to selected value
-                        onChanged: (String? newValue) {
-                          setState(
-                                () {
-                              semesterTypevalue = newValue!;
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-
-                  Text(
-                    'Theory Credit Hour Slider',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    'Lab Credit Hour Slider',
-                    style: TextStyle(fontSize: 20),
-                  ),
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
