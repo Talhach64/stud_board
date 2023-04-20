@@ -53,7 +53,7 @@ class _AdminHomeState extends State<AdminHome> {
           title: const Text('NFC IET Admin PORTAL'),
           backgroundColor: primaryColor,
         ),
-        body: Center(
+        body: const Center(
           child: Text(
             "DashBoard",
             style: TextStyle(fontSize: 30),

@@ -10,6 +10,7 @@ import 'package:stud_board/widget/img.dart';
 import 'package:stud_board/widget/loading_icon.dart';
 import 'package:stud_board/widget/text_widget.dart';
 
+import '../api_models/student_model.dart';
 import '../constant/constant.dart';
 import '../widget/pass_widget.dart';
 import 'admin_screens/admin_home.dart';
@@ -70,19 +71,19 @@ class _LoginState extends State<Login> {
                     controller: passwordController,
                     keyboard: TextInputType.text,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Register()));
-                    },
-                    child: const Text(
-                      'Register Instead?',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => const Register()));
+                  //   },
+                  //   child: const Text(
+                  //     'Register Instead?',
+                  //     style:
+                  //         TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  //   ),
+                  // ),
                   const SizedBox(height: 20.0),
                   ElevatedButton(
                     onPressed: () async {
@@ -103,12 +104,12 @@ class _LoginState extends State<Login> {
                         var person = await APIService().getOne("get-user");
                         await APIService().setPersonID(person["_id"]);
                         Navigator.pop(context);
-                        print(person['role']);
                         if(person['role']=="Student")
-                          { Navigator.pushReplacement(
+                          {
+                            Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const StudentHome()));}
+                                builder: (context) =>  StudentHome()));}
                         else if(person['role']=="Teacher")
                         { Navigator.pushReplacement(
                             context,

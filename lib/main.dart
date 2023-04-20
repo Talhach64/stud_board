@@ -15,7 +15,7 @@ void main() async {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: (id?.isNotEmpty ?? false) ? const StudentHome() : const Splash(),
+      home: (id?.isNotEmpty ?? false) ? StudentHome() : const Splash(),
     ),
   );
 }
