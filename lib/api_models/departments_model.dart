@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stud_board/api_models/location_model.dart';

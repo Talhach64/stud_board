@@ -18,12 +18,19 @@ class StudentHome extends StatefulWidget {
 
 class _StudentHomeState extends State<StudentHome> {
   @override
+  void initState() {
+
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         drawer: Drawer(
           child: ListView(
             children: [
+              const MyListTile(label: Text(), Icon: Icon(Icons.home)),
               const MyListTile(label: Text('Home'), Icon: Icon(Icons.home)),
               const MyListTile(
                   label: Text('Attendance'),

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:stud_board/api_models/location_model.dart';
+
 
 part 'programs_model.g.dart';
 
@@ -12,10 +12,8 @@ class ProgramsModel {
 
   @JsonKey(name: 'program_title')
   String programTitle;
-
   @JsonKey(name: 'program_abbreviation')
   String programAbbreviation;
-
   String type;
   String department;
 

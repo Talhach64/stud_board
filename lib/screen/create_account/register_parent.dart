@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stud_board/widget/loading_icon.dart';
 import 'package:stud_board/widget/text_widget.dart';
 import '../../constant/constant.dart';
+import '../../widget/img.dart';
 import '../../widget/pass_widget.dart';
-
 
 class RegisterParent extends StatefulWidget {
   const RegisterParent({Key? key}) : super(key: key);
@@ -15,6 +15,8 @@ class RegisterParent extends StatefulWidget {
 class _RegisterParentState extends State<RegisterParent> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
@@ -22,6 +24,8 @@ class _RegisterParentState extends State<RegisterParent> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    nameController.dispose();
+    phoneController.dispose();
     super.dispose();
   }
 
@@ -37,17 +41,30 @@ class _RegisterParentState extends State<RegisterParent> {
               key: _formKey,
               child: Column(
                 children: [
-                  const SizedBox(height: 5.0),
+                  const Img(),
+                  const SizedBox(height: 10),
                   const Text(
                     'Enter Parent Info',
                     style: TextStyle(fontSize: 35),
                   ),
                   MyTextFormField(
+                      label: 'Full Name',
+                      hint: "Full name",
+                      controller: nameController,
+                      validator: (String? value) =>
+                          value!.isEmpty ? "This field is required" : null),
+                  MyTextFormField(
+                      label: 'Phone No',
+                      hint: "Phone No",
+                      controller: phoneController,
+                      validator: (String? value) =>
+                      value!.isEmpty ? "This field is required" : null),
+                  MyTextFormField(
                       label: 'Email',
                       hint: 'Email',
                       controller: emailController,
                       validator: (String? value) =>
-                      value!.isEmpty ? "Invalid Email or Password" : null),
+                          value!.isEmpty ? "Invalid Email or Password" : null),
                   MyPassField(
                     label: 'Password',
                     hint: 'Password',
@@ -77,7 +94,7 @@ class _RegisterParentState extends State<RegisterParent> {
                     child: const Text(
                       'Register',
                       style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                   ),
                 ],

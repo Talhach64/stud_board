@@ -14,10 +14,10 @@ class RegisterStudent extends StatefulWidget {
   const RegisterStudent({Key? key}) : super(key: key);
 
   @override
-  State<RegisterStudent> createState() => _RegisterParentState();
+  State<RegisterStudent> createState() => _RegisterStudentState();
 }
 
-class _RegisterParentState extends State<RegisterStudent> {
+class _RegisterStudentState extends State<RegisterStudent> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -55,6 +55,40 @@ class _RegisterParentState extends State<RegisterStudent> {
       print(e);
     }
   }
+  // void _fetchPrograms() async {
+  //   try {
+  //     departments = (await APIService().getAll("departments"))
+  //         ?.map((e) => DepartmentsModel.fromJson(e))
+  //         .toList();
+  //     // departments?.forEach((element) {print(element.departmentName);});
+  //     setState(() {});
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+  // void _fetchSession() async {
+  //   try {
+  //     departments = (await APIService().getAll("departments"))
+  //         ?.map((e) => DepartmentsModel.fromJson(e))
+  //         .toList();
+  //     // departments?.forEach((element) {print(element.departmentName);});
+  //     setState(() {});
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+  // void _fetchSection() async {
+  //   try {
+  //     departments = (await APIService().getAll("departments"))
+  //         ?.map((e) => DepartmentsModel.fromJson(e))
+  //         .toList();
+  //     // departments?.forEach((element) {print(element.departmentName);});
+  //     setState(() {});
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +157,130 @@ class _RegisterParentState extends State<RegisterStudent> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 15),
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(width: 1)),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<DepartmentsModel>(
+                              hint: const Text(
+                                'Programs',
+                                style: TextStyle(
+                                  color: primaryColor,
+                                ),
+                              ),
+
+                              isExpanded: true,
+                              // Initial Value
+                              value: selectedDepartment,
+
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: departments?.map((var e) {
+                                return DropdownMenuItem(
+                                  value: e,
+                                  child: Text(e.departmentName),
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (var newValue) {
+                                setState(
+                                      () {
+                                    selectedDepartment = newValue!;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(width: 1)),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<DepartmentsModel>(
+                              hint: const Text(
+                                'Session',
+                                style: TextStyle(
+                                  color: primaryColor,
+                                ),
+                              ),
+
+                              isExpanded: true,
+                              // Initial Value
+                              value: selectedDepartment,
+
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: departments?.map((var e) {
+                                return DropdownMenuItem(
+                                  value: e,
+                                  child: Text(e.departmentName),
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (var newValue) {
+                                setState(
+                                      () {
+                                    selectedDepartment = newValue!;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(width: 1)),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<DepartmentsModel>(
+                              hint: const Text(
+                                'Section',
+                                style: TextStyle(
+                                  color: primaryColor,
+                                ),
+                              ),
+
+                              isExpanded: true,
+                              // Initial Value
+                              value: selectedDepartment,
+
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: departments?.map((var e) {
+                                return DropdownMenuItem(
+                                  value: e,
+                                  child: Text(e.departmentName),
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (var newValue) {
+                                setState(
+                                      () {
+                                    selectedDepartment = newValue!;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15),
                         ElevatedButton(
                           onPressed: () {
                             _controller.animateToPage(
