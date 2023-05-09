@@ -12,7 +12,8 @@ ProgramsModel _$ProgramsModelFromJson(Map<String, dynamic> json) =>
       programTitle: json['program_title'] as String,
       programAbbreviation: json['program_abbreviation'] as String,
       type: json['type'] as String,
-      department: json['department'] as String,
+      department:
+          DepartmentsModel.fromJson(json['department'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ProgramsModelToJson(ProgramsModel instance) =>
@@ -21,5 +22,5 @@ Map<String, dynamic> _$ProgramsModelToJson(ProgramsModel instance) =>
       'program_title': instance.programTitle,
       'program_abbreviation': instance.programAbbreviation,
       'type': instance.type,
-      'department': instance.department,
+      'department': instance.department.toJson(),
     };

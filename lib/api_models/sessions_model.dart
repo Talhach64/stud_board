@@ -1,6 +1,7 @@
-
 import 'package:json_annotation/json_annotation.dart';
-
+import 'package:stud_board/api_models/departments_model.dart';
+import 'package:stud_board/api_models/program_model_extra.dart';
+import 'package:stud_board/api_models/programs_model.dart';
 
 part 'sessions_model.g.dart';
 
@@ -8,26 +9,25 @@ part 'sessions_model.g.dart';
 class SessionsModel {
   @JsonKey(name: '_id')
   String? id;
-  @JsonKey(name: 'section_title')
-  String sectionTitle;
-  String department;
-  String program;
-  String session;
+
+  @JsonKey(name: 'session_title')
+  String sessionTitle;
+
   String type;
+
   @JsonKey(name: 'starting_year')
-  String? startingYear;
+  String startingYear;
+
   @JsonKey(name: 'ending_year')
   String endingYear;
 
   SessionsModel(
       {required this.id,
-      required this.department,
-      required this.program,
-      required this.session,
-      required this.sectionTitle,
+      required this.sessionTitle,
       required this.type,
-      this.startingYear,
-      required this.endingYear});
+      required this.startingYear,
+      required this.endingYear
+      });
 
   factory SessionsModel.fromJson(Map<String, dynamic> json) =>
       _$SessionsModelFromJson(json);

@@ -15,14 +15,15 @@ class DepartmentsModel {
   String departmentName;
   @JsonKey(name: 'department_abbreviation')
   String departmentAbbreviation;
-  @JsonKey(name: 'no_of_programs')
-  int noOfPrograms;
+  // @JsonKey(name: 'no_of_programs')
+  // int noOfPrograms;
 
   DepartmentsModel(
       {required this.id,
       required this.departmentName,
       required this.departmentAbbreviation,
-      required this.noOfPrograms});
+      // required this.noOfPrograms
+      });
 
   factory DepartmentsModel.fromJson(Map<String, dynamic> json) =>
       _$DepartmentsModelFromJson(json);

@@ -11,7 +11,6 @@ DepartmentsModel _$DepartmentsModelFromJson(Map<String, dynamic> json) =>
       id: json['_id'] as String?,
       departmentName: json['department_name'] as String,
       departmentAbbreviation: json['department_abbreviation'] as String,
-      noOfPrograms: json['no_of_programs'] as int,
     )..location = json['location'] == null
         ? null
         : LocationModel.fromJson(json['location'] as Map<String, dynamic>);
@@ -22,5 +21,4 @@ Map<String, dynamic> _$DepartmentsModelToJson(DepartmentsModel instance) =>
       '_id': instance.id,
       'department_name': instance.departmentName,
       'department_abbreviation': instance.departmentAbbreviation,
-      'no_of_programs': instance.noOfPrograms,
     };

@@ -9,25 +9,18 @@ part of 'sections_model.dart';
 SectionsModel _$SectionsModelFromJson(Map<String, dynamic> json) =>
     SectionsModel(
       id: json['_id'] as String?,
-      department: json['department'] as String,
-      program: json['program'] as String,
-      session: json['session'] as String,
+      department:
+          DepartmentsModel.fromJson(json['department'] as Map<String, dynamic>),
+      program: ProgramsModel.fromJson(json['program'] as Map<String, dynamic>),
+      session: SessionsModel.fromJson(json['session'] as Map<String, dynamic>),
       sectionTitle: json['section_title'] as String,
-      sessionTitle: json['session_title'] as String,
-      type: json['type'] as String,
-      startingYear: json['starting_year'] as String?,
-      endingYear: json['ending_year'] as String,
     );
 
 Map<String, dynamic> _$SectionsModelToJson(SectionsModel instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'section_title': instance.sectionTitle,
-      'session_title': instance.sessionTitle,
-      'department': instance.department,
-      'program': instance.program,
-      'session': instance.session,
-      'type': instance.type,
-      'starting_year': instance.startingYear,
-      'ending_year': instance.endingYear,
+      'department': instance.department.toJson(),
+      'program': instance.program.toJson(),
+      'session': instance.session.toJson(),
     };

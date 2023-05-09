@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:stud_board/api_models/qr_scanner_model.dart';
+import 'package:stud_board/api_services/api_services.dart';
 import 'package:stud_board/constant/constant.dart';
 
 class QRViewExample extends StatefulWidget {
@@ -15,6 +17,7 @@ class QRViewExample extends StatefulWidget {
 
 class _QRViewExampleState extends State<QRViewExample> {
   Barcode? result;
+  String? show;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
@@ -43,11 +46,10 @@ class _QRViewExampleState extends State<QRViewExample> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  if (result != null)
-                    Text(
-                        'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  else
-                    const Text('Scan a code',style: TextStyle(fontSize: 25),),
+                  const Text(
+                      'Scan a code',
+                      style: TextStyle(fontSize: 25),
+                    ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -56,7 +58,8 @@ class _QRViewExampleState extends State<QRViewExample> {
                         margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: primaryColor, ),
+                              backgroundColor: primaryColor,
+                            ),
                             onPressed: () async {
                               await controller?.toggleFlash();
                               setState(() {});
@@ -72,7 +75,8 @@ class _QRViewExampleState extends State<QRViewExample> {
                         margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: primaryColor, ),
+                              backgroundColor: primaryColor,
+                            ),
                             onPressed: () async {
                               await controller?.flipCamera();
                               setState(() {});
@@ -99,7 +103,8 @@ class _QRViewExampleState extends State<QRViewExample> {
                         margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor, ),
+                            backgroundColor: primaryColor,
+                          ),
                           onPressed: () async {
                             await controller?.pauseCamera();
                           },
@@ -111,7 +116,8 @@ class _QRViewExampleState extends State<QRViewExample> {
                         margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor, ),
+                            backgroundColor: primaryColor,
+                          ),
                           onPressed: () async {
                             await controller?.resumeCamera();
                           },
@@ -133,7 +139,7 @@ class _QRViewExampleState extends State<QRViewExample> {
   Widget _buildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
-        MediaQuery.of(context).size.height < 400)
+            MediaQuery.of(context).size.height < 400)
         ? 150.0
         : 300.0;
     // To ensure the Scanner view is properly sizes after rotation
@@ -147,7 +153,7 @@ class _QRViewExampleState extends State<QRViewExample> {
           borderLength: 30,
           borderWidth: 10,
           cutOutSize: scanArea),
-      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+      // onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
   }
 
@@ -156,24 +162,53 @@ class _QRViewExampleState extends State<QRViewExample> {
       this.controller = controller;
     });
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
+      result = scanData;
+      Future res = markAttendance(result?.code);
+
+      res.then((value) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(value['message'])));
       });
+      setState(() {});
     });
   }
 
-  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
-    if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
-      );
-    }
-  }
+  // void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+  //   log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
+  //   if (!p) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text('no Permission')),
+  //     );
+  //   }
+  // }
 
   @override
   void dispose() {
     controller?.dispose();
     super.dispose();
+  }
+
+  Future<dynamic> markAttendance(route) async {
+    var token = await APIService().getToken();
+    Response res = await Dio().post(
+      "$route",
+      data: {"student": token},
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer ${await APIService().getToken()}',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      ),
+    );
+    switch (res.statusCode) {
+      case 200:
+        return res.data;
+      case 404:
+        throw Exception('Not found');
+      case 500:
+        throw Exception('Internal server error');
+      default:
+        throw Exception('An unexpected error occurred');
+    }
   }
 }

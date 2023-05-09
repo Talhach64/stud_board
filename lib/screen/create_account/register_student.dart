@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:stud_board/api_models/departments_model.dart';
 import 'package:stud_board/api_models/programs_model.dart';
@@ -28,12 +29,14 @@ class _RegisterStudentState extends State<RegisterStudent> {
 
   List<DepartmentsModel>? departments = [];
   DepartmentsModel? selectedDepartment;
-  List<ProgramsModel> programs = [];
+
+  List<ProgramsModel>? programs = [];
   ProgramsModel? selectedProgram;
-  List<SessionsModel> session = [];
+
+  List<SessionsModel>? session = [];
   SessionsModel? selectedSession;
-  List<SectionsModel> sections = [];
-  SectionsModel? selectedSection;
+  // List<SectionsModel>? sections = [];
+  // SectionsModel? selectedSection;
 
   List gender = ["Male", "Female", "Other"];
   String? selectedGender;
@@ -49,46 +52,59 @@ class _RegisterStudentState extends State<RegisterStudent> {
       departments = (await APIService().getAll("departments"))
           ?.map((e) => DepartmentsModel.fromJson(e))
           .toList();
-      // departments?.forEach((element) {print(element.departmentName);});
       setState(() {});
     } catch (e) {
       print(e);
     }
   }
-  // void _fetchPrograms() async {
-  //   try {
-  //     departments = (await APIService().getAll("departments"))
-  //         ?.map((e) => DepartmentsModel.fromJson(e))
-  //         .toList();
-  //     // departments?.forEach((element) {print(element.departmentName);});
-  //     setState(() {});
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-  // void _fetchSession() async {
-  //   try {
-  //     departments = (await APIService().getAll("departments"))
-  //         ?.map((e) => DepartmentsModel.fromJson(e))
-  //         .toList();
-  //     // departments?.forEach((element) {print(element.departmentName);});
-  //     setState(() {});
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-  // void _fetchSection() async {
-  //   try {
-  //     departments = (await APIService().getAll("departments"))
-  //         ?.map((e) => DepartmentsModel.fromJson(e))
-  //         .toList();
-  //     // departments?.forEach((element) {print(element.departmentName);});
-  //     setState(() {});
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
+  Future<List<dynamic>?> _fetchPrograms(deptID) async {
+    try {
+      final response = await Dio().get(
+        "https://nfc-master-api.onrender.com/api/programs?department=$deptID",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${await APIService().getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        ),
+      );
+      List<dynamic> data = response.data;
+      programs = (data).map((e) => ProgramsModel.fromJson(e)).toList();
+      setState(() {
+      });
+    } catch (error) {
+      print(error);
+      return null;
+    }
+
+    return null;
+  }
+  Future<List<dynamic>?> _fetchSession(deptID,progamID) async {
+    try {
+      final response = await Dio().get(
+        "https://nfc-master-api.onrender.com/api/sessions?department=$deptID&program=$progamID",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${await APIService().getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        ),
+      );
+      List<dynamic> data = response.data;
+      print(response.data);
+      print("here is error");
+      session = (data).map((e) => SessionsModel.fromJson(e)).toList();
+      print("error");
+
+      setState(() {
+      });
+    } catch (error) {
+      print(error);
+      return null;
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,10 +164,13 @@ class _RegisterStudentState extends State<RegisterStudent> {
                               // After selecting the desired option,it will
                               // change button value to selected value
                               onChanged: (var newValue) {
+                                selectedDepartment = newValue!;
+                                selectedProgram = null;
+                                selectedSession = null;
+                                // selectedSection = null;
+                                _fetchPrograms(selectedDepartment?.id);
                                 setState(
-                                  () {
-                                    selectedDepartment = newValue!;
-                                  },
+                                  () {},
                                 );
                               },
                             ),
@@ -164,8 +183,8 @@ class _RegisterStudentState extends State<RegisterStudent> {
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(width: 1)),
                           child: DropdownButtonHideUnderline(
-                            child: DropdownButton<DepartmentsModel>(
-                              hint: const Text(
+                            child: DropdownButton<ProgramsModel>(
+                              hint:Text(
                                 'Programs',
                                 style: TextStyle(
                                   color: primaryColor,
@@ -173,25 +192,30 @@ class _RegisterStudentState extends State<RegisterStudent> {
                               ),
 
                               isExpanded: true,
+
                               // Initial Value
-                              value: selectedDepartment,
+                              value: selectedProgram,
+
 
                               // Down Arrow Icon
                               icon: const Icon(Icons.keyboard_arrow_down),
 
                               // Array list of items
-                              items: departments?.map((var e) {
+                              items: programs?.map((var e) {
                                 return DropdownMenuItem(
                                   value: e,
-                                  child: Text(e.departmentName),
+                                  child: Text(e.programAbbreviation),
                                 );
                               }).toList(),
                               // After selecting the desired option,it will
                               // change button value to selected value
                               onChanged: (var newValue) {
+                                selectedProgram = newValue!;
+                                selectedSession = null;
+                                _fetchSession(selectedDepartment?.id, selectedProgram?.id);
+
                                 setState(
-                                      () {
-                                    selectedDepartment = newValue!;
+                                  () {
                                   },
                                 );
                               },
@@ -205,7 +229,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(width: 1)),
                           child: DropdownButtonHideUnderline(
-                            child: DropdownButton<DepartmentsModel>(
+                            child: DropdownButton<SessionsModel>(
                               hint: const Text(
                                 'Session',
                                 style: TextStyle(
@@ -215,24 +239,24 @@ class _RegisterStudentState extends State<RegisterStudent> {
 
                               isExpanded: true,
                               // Initial Value
-                              value: selectedDepartment,
+                              value: selectedSession,
 
                               // Down Arrow Icon
                               icon: const Icon(Icons.keyboard_arrow_down),
 
                               // Array list of items
-                              items: departments?.map((var e) {
+                              items: session?.map((var e) {
                                 return DropdownMenuItem(
                                   value: e,
-                                  child: Text(e.departmentName),
+                                  child: Text(e.sessionTitle),
                                 );
                               }).toList(),
                               // After selecting the desired option,it will
                               // change button value to selected value
                               onChanged: (var newValue) {
                                 setState(
-                                      () {
-                                    selectedDepartment = newValue!;
+                                  () {
+                                    selectedSession = newValue!;
                                   },
                                 );
                               },
@@ -272,7 +296,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
                               // change button value to selected value
                               onChanged: (var newValue) {
                                 setState(
-                                      () {
+                                  () {
                                     selectedDepartment = newValue!;
                                   },
                                 );
@@ -424,7 +448,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>  Login()));
+                                    builder: (context) => Login()));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
@@ -438,7 +462,6 @@ class _RegisterStudentState extends State<RegisterStudent> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
-
                         ),
                       ],
                     ),

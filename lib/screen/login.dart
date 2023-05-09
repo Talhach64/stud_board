@@ -71,19 +71,19 @@ class _LoginState extends State<Login> {
                     controller: passwordController,
                     keyboard: TextInputType.text,
                   ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //             builder: (context) => const Register()));
-                  //   },
-                  //   child: const Text(
-                  //     'Register Instead?',
-                  //     style:
-                  //         TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  //   ),
-                  // ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Register()));
+                    },
+                    child: const Text(
+                      'Register Instead?',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   const SizedBox(height: 20.0),
                   ElevatedButton(
                     onPressed: () async {
