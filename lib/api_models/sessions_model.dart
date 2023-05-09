@@ -14,7 +14,6 @@ class SessionsModel {
   String sessionTitle;
 
   String type;
-
   @JsonKey(name: 'starting_year')
   String startingYear;
 
