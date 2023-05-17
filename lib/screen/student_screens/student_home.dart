@@ -28,9 +28,9 @@ class _StudentHomeState extends State<StudentHome> {
     super.initState();
   }
     void fetch()async{
-   var res = await APIService().getOne("get-user");
+   Response res = await APIService().getOne("get-user");
    setState(() {
-     name = res['name'];
+     name = res.data['name'];
    });
   }
   @override

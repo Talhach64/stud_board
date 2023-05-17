@@ -14,9 +14,9 @@ class SectionsModel {
   String? id;
   @JsonKey(name: 'section_title')
   String sectionTitle;
-  DepartmentsModel department;
-  ProgramsModel program;
-  SessionsModel session;
+  // DepartmentsModel department;
+  // ProgramsModel program;
+  // SessionsModel session;
   // @JsonKey(name: 'session_title')
   // String sessionTitle;
   // String type;
@@ -27,9 +27,9 @@ class SectionsModel {
 
   SectionsModel(
       {required this.id,
-        required this.department,
-        required this.program,
-        required this.session,
+        // required this.department,
+        // required this.program,
+        // required this.session,
         required this.sectionTitle,
         });
 

@@ -19,13 +19,17 @@ class RegisterStudent extends StatefulWidget {
 }
 
 class _RegisterStudentState extends State<RegisterStudent> {
-  final _formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController rollNoController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  bool click = false;
-  AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
+
   final PageController _controller = PageController();
+
   int _currentIndex = 0;
+  bool obscure = true;
+  bool obscure1= true;
 
   List<DepartmentsModel>? departments = [];
   DepartmentsModel? selectedDepartment;
@@ -35,8 +39,9 @@ class _RegisterStudentState extends State<RegisterStudent> {
 
   List<SessionsModel>? session = [];
   SessionsModel? selectedSession;
-  // List<SectionsModel>? sections = [];
-  // SectionsModel? selectedSection;
+
+  List<SectionsModel>? sections = [];
+  SectionsModel? selectedSection;
 
   List gender = ["Male", "Female", "Other"];
   String? selectedGender;
@@ -71,8 +76,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
       );
       List<dynamic> data = response.data;
       programs = (data).map((e) => ProgramsModel.fromJson(e)).toList();
-      setState(() {
-      });
+      setState(() {});
     } catch (error) {
       print(error);
       return null;
@@ -80,7 +84,8 @@ class _RegisterStudentState extends State<RegisterStudent> {
 
     return null;
   }
-  Future<List<dynamic>?> _fetchSession(deptID,progamID) async {
+
+  Future<List<dynamic>?> _fetchSession(deptID, progamID) async {
     try {
       final response = await Dio().get(
         "https://nfc-master-api.onrender.com/api/sessions?department=$deptID&program=$progamID",
@@ -92,13 +97,35 @@ class _RegisterStudentState extends State<RegisterStudent> {
         ),
       );
       List<dynamic> data = response.data;
+
+      session = (data).map((e) => SessionsModel.fromJson(e)).toList();
+
+      setState(() {});
+    } catch (error) {
+      print(error);
+      return null;
+    }
+    return null;
+  }
+
+  Future<List<dynamic>?> _fetchSection(deptID, progamID, sessionID) async {
+    try {
+      final response = await Dio().get(
+        "https://nfc-master-api.onrender.com/api/sections?department=$deptID&program=$progamID&session=$sessionID",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${await APIService().getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        ),
+      );
+      List<dynamic> data = response.data;
       print(response.data);
       print("here is error");
-      session = (data).map((e) => SessionsModel.fromJson(e)).toList();
+      sections = (data).map((e) => SectionsModel.fromJson(e)).toList();
       print("error");
 
-      setState(() {
-      });
+      setState(() {});
     } catch (error) {
       print(error);
       return null;
@@ -123,7 +150,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
               children: [
                 SingleChildScrollView(
                   child: Container(
-                    padding: const EdgeInsets.all(20.0),
+                    // padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
                         const Img(),
@@ -134,9 +161,10 @@ class _RegisterStudentState extends State<RegisterStudent> {
                         ),
                         const SizedBox(height: 15),
                         Container(
-                          padding: const EdgeInsets.all(5),
+                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(5.0),
                               border: Border.all(width: 1)),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<DepartmentsModel>(
@@ -167,7 +195,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
                                 selectedDepartment = newValue!;
                                 selectedProgram = null;
                                 selectedSession = null;
-                                // selectedSection = null;
+                                selectedSection = null;
                                 _fetchPrograms(selectedDepartment?.id);
                                 setState(
                                   () {},
@@ -178,13 +206,14 @@ class _RegisterStudentState extends State<RegisterStudent> {
                         ),
                         SizedBox(height: 15),
                         Container(
-                          padding: const EdgeInsets.all(5),
+                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(5.0),
                               border: Border.all(width: 1)),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<ProgramsModel>(
-                              hint:Text(
+                              hint: Text(
                                 'Programs',
                                 style: TextStyle(
                                   color: primaryColor,
@@ -195,7 +224,6 @@ class _RegisterStudentState extends State<RegisterStudent> {
 
                               // Initial Value
                               value: selectedProgram,
-
 
                               // Down Arrow Icon
                               icon: const Icon(Icons.keyboard_arrow_down),
@@ -212,11 +240,12 @@ class _RegisterStudentState extends State<RegisterStudent> {
                               onChanged: (var newValue) {
                                 selectedProgram = newValue!;
                                 selectedSession = null;
-                                _fetchSession(selectedDepartment?.id, selectedProgram?.id);
+                                selectedSection = null;
+                                _fetchSession(selectedDepartment?.id,
+                                    selectedProgram?.id);
 
                                 setState(
-                                  () {
-                                  },
+                                  () {},
                                 );
                               },
                             ),
@@ -224,9 +253,10 @@ class _RegisterStudentState extends State<RegisterStudent> {
                         ),
                         SizedBox(height: 15),
                         Container(
-                          padding: const EdgeInsets.all(5),
+                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(5.0),
                               border: Border.all(width: 1)),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<SessionsModel>(
@@ -254,10 +284,12 @@ class _RegisterStudentState extends State<RegisterStudent> {
                               // After selecting the desired option,it will
                               // change button value to selected value
                               onChanged: (var newValue) {
+                                selectedSession = newValue!;
+                                selectedSection = null;
+                                _fetchSection(selectedDepartment!.id,
+                                    selectedProgram!.id, selectedSession!.id);
                                 setState(
-                                  () {
-                                    selectedSession = newValue!;
-                                  },
+                                  () {},
                                 );
                               },
                             ),
@@ -265,12 +297,13 @@ class _RegisterStudentState extends State<RegisterStudent> {
                         ),
                         SizedBox(height: 15),
                         Container(
-                          padding: const EdgeInsets.all(5),
+                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(5.0),
                               border: Border.all(width: 1)),
                           child: DropdownButtonHideUnderline(
-                            child: DropdownButton<DepartmentsModel>(
+                            child: DropdownButton<SectionsModel>(
                               hint: const Text(
                                 'Section',
                                 style: TextStyle(
@@ -280,25 +313,24 @@ class _RegisterStudentState extends State<RegisterStudent> {
 
                               isExpanded: true,
                               // Initial Value
-                              value: selectedDepartment,
+                              value: selectedSection,
 
                               // Down Arrow Icon
                               icon: const Icon(Icons.keyboard_arrow_down),
 
                               // Array list of items
-                              items: departments?.map((var e) {
+                              items: sections?.map((var e) {
                                 return DropdownMenuItem(
                                   value: e,
-                                  child: Text(e.departmentName),
+                                  child: Text(e.sectionTitle),
                                 );
                               }).toList(),
                               // After selecting the desired option,it will
                               // change button value to selected value
                               onChanged: (var newValue) {
+                                selectedSection = newValue!;
                                 setState(
-                                  () {
-                                    selectedDepartment = newValue!;
-                                  },
+                                  () {},
                                 );
                               },
                             ),
@@ -312,6 +344,15 @@ class _RegisterStudentState extends State<RegisterStudent> {
                               duration: Duration(milliseconds: 500),
                               curve: Curves.easeInOut,
                             );
+                            if (selectedDepartment != null ||
+                                selectedProgram != null ||
+                                selectedSession != null ||
+                                selectedSection != null) {
+                              print(selectedDepartment?.id);
+                              print(selectedProgram?.id);
+                              print(selectedSession?.id);
+                              print(selectedSection?.id);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
@@ -332,7 +373,6 @@ class _RegisterStudentState extends State<RegisterStudent> {
                 ),
                 SingleChildScrollView(
                   child: Container(
-                    padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
                         const Img(),
@@ -342,11 +382,11 @@ class _RegisterStudentState extends State<RegisterStudent> {
                           style: TextStyle(fontSize: 25),
                         ),
                         const SizedBox(height: 15),
-                        MyTextFormField(label: "Full Name", hint: "Full Name"),
-                        MyTextFormField(label: "Phone NO", hint: "Phone NO"),
+                        MyTextFormField(label: "Full Name", hint: "Full Name",controller: nameController,),
+                        MyTextFormField(label: "Phone NO", hint: "Phone NO",controller: phoneController,),
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 20),
-                          padding: const EdgeInsets.all(5),
+                          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),
                             border: Border.all(width: 1, color: primaryColor),
@@ -390,7 +430,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
                           ),
                         ),
                         MyTextFormField(
-                            label: "Class Roll No", hint: "Class Roll No"),
+                            label: "Class Roll No", hint: "Class Roll No",controller: rollNoController,),
                         ElevatedButton(
                           onPressed: () {
                             _controller.animateToPage(
@@ -418,26 +458,81 @@ class _RegisterStudentState extends State<RegisterStudent> {
                 ),
                 SingleChildScrollView(
                   child: Container(
-                    padding: const EdgeInsets.all(20.0),
+                    // padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        Img(),
-                        SizedBox(height: 10),
+                        const Img(),
+                        const SizedBox(height: 10),
                         const Text(
                           'Almost Done',
                           style: TextStyle(fontSize: 25),
                         ),
                         const SizedBox(height: 15),
-                        MyPassField(
-                            label: "Password",
-                            hint: "Password",
-                            controller: passwordController,
-                            keyboard: TextInputType.text),
-                        MyPassField(
-                            label: "ConfirmPassword",
-                            hint: "ConfirmPassword",
-                            controller: confirmPasswordController,
-                            keyboard: TextInputType.text),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextFormField(
+                            obscureText: obscure,
+                            //autovalidateMode: AutovalidateMode.onUserInteraction,
+                            controller:passwordController,
+                            keyboardType: TextInputType.text,
+                            //  validator: validator,
+                            decoration: InputDecoration(
+                              labelStyle: const TextStyle(color: primaryColor),
+                              hintText: "Password",
+                              labelText: "Password",
+                              suffixIcon: GestureDetector(
+                                onTap: () => setState(() => obscure = !obscure),
+                                child: obscure
+                                    ? const Icon(
+                                  Icons.visibility,
+                                  color: primaryColor,
+                                )
+                                    : const Icon(Icons.visibility_off, color: primaryColor),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: const BorderSide(color: primaryColor),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextFormField(
+                            obscureText: obscure1,
+                            //autovalidateMode: AutovalidateMode.onUserInteraction,
+                            controller:confirmPasswordController,
+                            keyboardType: TextInputType.text,
+                            //  validator: validator,
+                            decoration: InputDecoration(
+                              labelStyle: const TextStyle(color: primaryColor),
+                              hintText: "ConfirmPassword",
+                              labelText: "ConfirmPassword",
+                              suffixIcon: GestureDetector(
+                                onTap: () => setState(() => obscure1 = !obscure1),
+                                child: obscure1
+                                    ? const Icon(
+                                  Icons.visibility,
+                                  color: primaryColor,
+                                )
+                                    : const Icon(Icons.visibility_off, color: primaryColor),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: const BorderSide(color: primaryColor),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(height: 10),
                         ElevatedButton(
                           onPressed: () {
                             _controller.animateToPage(
