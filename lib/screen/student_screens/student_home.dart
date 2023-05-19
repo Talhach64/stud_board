@@ -23,14 +23,14 @@ class _StudentHomeState extends State<StudentHome> {
  String name= '';
   @override
   void initState() {
-    fetch();
-    // TODO: implement initState
     super.initState();
+    fetch();
   }
     void fetch()async{
-   Response res = await APIService().getOne("get-user");
+   var res = await APIService().getOne("get-user");
+
    setState(() {
-     name = res.data['name'];
+     name = res['name'];
    });
   }
   @override

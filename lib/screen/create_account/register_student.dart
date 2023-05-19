@@ -25,11 +25,14 @@ class _RegisterStudentState extends State<RegisterStudent> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+  AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
+
   final PageController _controller = PageController();
 
   int _currentIndex = 0;
   bool obscure = true;
-  bool obscure1= true;
+  bool obscure1 = true;
 
   List<DepartmentsModel>? departments = [];
   DepartmentsModel? selectedDepartment;
@@ -139,430 +142,499 @@ class _RegisterStudentState extends State<RegisterStudent> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Scaffold(
-          body: SizedBox(
-            child: PageView(
-              onPageChanged: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              controller: _controller,
-              children: [
-                SingleChildScrollView(
-                  child: Container(
-                    // padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        const Img(),
-                        const SizedBox(height: 10),
-                        const Text(
-                          'Enter University Information',
-                          style: TextStyle(fontSize: 25),
-                        ),
-                        const SizedBox(height: 15),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                              border: Border.all(width: 1)),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<DepartmentsModel>(
-                              hint: const Text(
-                                'Department',
-                                style: TextStyle(
-                                  color: primaryColor,
-                                ),
-                              ),
-
-                              isExpanded: true,
-                              // Initial Value
-                              value: selectedDepartment,
-
-                              // Down Arrow Icon
-                              icon: const Icon(Icons.keyboard_arrow_down),
-
-                              // Array list of items
-                              items: departments?.map((var e) {
-                                return DropdownMenuItem(
-                                  value: e,
-                                  child: Text(e.departmentName),
-                                );
-                              }).toList(),
-                              // After selecting the desired option,it will
-                              // change button value to selected value
-                              onChanged: (var newValue) {
-                                selectedDepartment = newValue!;
-                                selectedProgram = null;
-                                selectedSession = null;
-                                selectedSection = null;
-                                _fetchPrograms(selectedDepartment?.id);
-                                setState(
-                                  () {},
-                                );
-                              },
-                            ),
+          body: Form(
+            autovalidateMode: autoValidateMode,
+            key: _formKey,
+            child: SizedBox(
+              child: PageView(
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                controller: _controller,
+                children: [
+                  SingleChildScrollView(
+                    child: Container(
+                      // padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          const Img(),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Enter University Information',
+                            style: TextStyle(fontSize: 25),
                           ),
-                        ),
-                        SizedBox(height: 15),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                              border: Border.all(width: 1)),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<ProgramsModel>(
-                              hint: Text(
-                                'Programs',
-                                style: TextStyle(
-                                  color: primaryColor,
-                                ),
-                              ),
-
-                              isExpanded: true,
-
-                              // Initial Value
-                              value: selectedProgram,
-
-                              // Down Arrow Icon
-                              icon: const Icon(Icons.keyboard_arrow_down),
-
-                              // Array list of items
-                              items: programs?.map((var e) {
-                                return DropdownMenuItem(
-                                  value: e,
-                                  child: Text(e.programAbbreviation),
-                                );
-                              }).toList(),
-                              // After selecting the desired option,it will
-                              // change button value to selected value
-                              onChanged: (var newValue) {
-                                selectedProgram = newValue!;
-                                selectedSession = null;
-                                selectedSection = null;
-                                _fetchSession(selectedDepartment?.id,
-                                    selectedProgram?.id);
-
-                                setState(
-                                  () {},
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                              border: Border.all(width: 1)),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<SessionsModel>(
-                              hint: const Text(
-                                'Session',
-                                style: TextStyle(
-                                  color: primaryColor,
-                                ),
-                              ),
-
-                              isExpanded: true,
-                              // Initial Value
-                              value: selectedSession,
-
-                              // Down Arrow Icon
-                              icon: const Icon(Icons.keyboard_arrow_down),
-
-                              // Array list of items
-                              items: session?.map((var e) {
-                                return DropdownMenuItem(
-                                  value: e,
-                                  child: Text(e.sessionTitle),
-                                );
-                              }).toList(),
-                              // After selecting the desired option,it will
-                              // change button value to selected value
-                              onChanged: (var newValue) {
-                                selectedSession = newValue!;
-                                selectedSection = null;
-                                _fetchSection(selectedDepartment!.id,
-                                    selectedProgram!.id, selectedSession!.id);
-                                setState(
-                                  () {},
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                              border: Border.all(width: 1)),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<SectionsModel>(
-                              hint: const Text(
-                                'Section',
-                                style: TextStyle(
-                                  color: primaryColor,
-                                ),
-                              ),
-
-                              isExpanded: true,
-                              // Initial Value
-                              value: selectedSection,
-
-                              // Down Arrow Icon
-                              icon: const Icon(Icons.keyboard_arrow_down),
-
-                              // Array list of items
-                              items: sections?.map((var e) {
-                                return DropdownMenuItem(
-                                  value: e,
-                                  child: Text(e.sectionTitle),
-                                );
-                              }).toList(),
-                              // After selecting the desired option,it will
-                              // change button value to selected value
-                              onChanged: (var newValue) {
-                                selectedSection = newValue!;
-                                setState(
-                                  () {},
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        ElevatedButton(
-                          onPressed: () {
-                            _controller.animateToPage(
-                              1,
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.easeInOut,
-                            );
-                            if (selectedDepartment != null ||
-                                selectedProgram != null ||
-                                selectedSession != null ||
-                                selectedSection != null) {
-                              print(selectedDepartment?.id);
-                              print(selectedProgram?.id);
-                              print(selectedSession?.id);
-                              print(selectedSection?.id);
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
-                            fixedSize: const Size(120, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          child: const Text(
-                            'NEXT',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: Container(
-                    child: Column(
-                      children: [
-                        const Img(),
-                        const SizedBox(height: 10),
-                        const Text(
-                          'Enter Personal Information',
-                          style: TextStyle(fontSize: 25),
-                        ),
-                        const SizedBox(height: 15),
-                        MyTextFormField(label: "Full Name", hint: "Full Name",controller: nameController,),
-                        MyTextFormField(label: "Phone NO", hint: "Phone NO",controller: phoneController,),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
-                          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            border: Border.all(width: 1, color: primaryColor),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              hint: const Text(
-                                'Gender',
-                                style: TextStyle(
-                                  color: primaryColor,
-                                ),
-                              ),
-
-                              isExpanded: true,
-                              // Initial Value
-                              value: selectedGender,
-
-                              // Down Arrow Icon
-                              icon: const Icon(
-                                Icons.keyboard_arrow_down,
-                                color: primaryColor,
-                              ),
-
-                              // Array list of items
-                              items: gender.map((e) {
-                                return DropdownMenuItem(
-                                  value: e,
-                                  child: Text(e),
-                                );
-                              }).toList(),
-                              // After selecting the desired option,it will
-                              // change button value to selected value
-                              onChanged: (newValue) {
-                                setState(
-                                  () {
-                                    selectedGender = newValue! as String?;
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        MyTextFormField(
-                            label: "Class Roll No", hint: "Class Roll No",controller: rollNoController,),
-                        ElevatedButton(
-                          onPressed: () {
-                            _controller.animateToPage(
-                              2,
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.easeInOut,
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
-                            fixedSize: const Size(120, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          child: const Text(
-                            'NEXT',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: Container(
-                    // padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        const Img(),
-                        const SizedBox(height: 10),
-                        const Text(
-                          'Almost Done',
-                          style: TextStyle(fontSize: 25),
-                        ),
-                        const SizedBox(height: 15),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: TextFormField(
-                            obscureText: obscure,
-                            //autovalidateMode: AutovalidateMode.onUserInteraction,
-                            controller:passwordController,
-                            keyboardType: TextInputType.text,
-                            //  validator: validator,
-                            decoration: InputDecoration(
-                              labelStyle: const TextStyle(color: primaryColor),
-                              hintText: "Password",
-                              labelText: "Password",
-                              suffixIcon: GestureDetector(
-                                onTap: () => setState(() => obscure = !obscure),
-                                child: obscure
-                                    ? const Icon(
-                                  Icons.visibility,
-                                  color: primaryColor,
-                                )
-                                    : const Icon(Icons.visibility_off, color: primaryColor),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                              ),
-                              enabledBorder: OutlineInputBorder(
+                          const SizedBox(height: 15),
+                          Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5.0),
-                                borderSide: const BorderSide(color: primaryColor),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: TextFormField(
-                            obscureText: obscure1,
-                            //autovalidateMode: AutovalidateMode.onUserInteraction,
-                            controller:confirmPasswordController,
-                            keyboardType: TextInputType.text,
-                            //  validator: validator,
-                            decoration: InputDecoration(
-                              labelStyle: const TextStyle(color: primaryColor),
-                              hintText: "ConfirmPassword",
-                              labelText: "ConfirmPassword",
-                              suffixIcon: GestureDetector(
-                                onTap: () => setState(() => obscure1 = !obscure1),
-                                child: obscure1
-                                    ? const Icon(
-                                  Icons.visibility,
-                                  color: primaryColor,
-                                )
-                                    : const Icon(Icons.visibility_off, color: primaryColor),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                                borderSide: const BorderSide(color: primaryColor),
-                              ),
-                            ),
-                          ),
-                        ),
+                                border: Border.all(width: 1)),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<DepartmentsModel>(
+                                hint: const Text(
+                                  'Department',
+                                  style: TextStyle(
+                                    color: primaryColor,
+                                  ),
+                                ),
 
-                        SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            _controller.animateToPage(
-                              2,
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.easeInOut,
-                            );
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Login()));
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
-                            fixedSize: const Size(120, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
+                                isExpanded: true,
+                                // Initial Value
+                                value: selectedDepartment,
+
+                                // Down Arrow Icon
+                                icon: const Icon(Icons.keyboard_arrow_down),
+
+                                // Array list of items
+                                items: departments?.map((var e) {
+                                  return DropdownMenuItem(
+                                    value: e,
+                                    child: Text(e.departmentName),
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (var newValue) {
+                                  selectedProgram = null;
+                                  selectedSession = null;
+                                  selectedSection = null;
+                                  selectedDepartment = newValue!;
+                                  _fetchPrograms(selectedDepartment?.id);
+                                  setState(
+                                    () {},
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                          child: const Text(
-                            'Register',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15),
+                          SizedBox(height: 15),
+                          Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                border: Border.all(width: 1)),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<ProgramsModel>(
+                                hint: Text(
+                                  'Programs',
+                                  style: TextStyle(
+                                    color: primaryColor,
+                                  ),
+                                ),
+
+                                isExpanded: true,
+
+                                // Initial Value
+                                value: selectedProgram,
+
+                                // Down Arrow Icon
+                                icon: const Icon(Icons.keyboard_arrow_down),
+
+                                // Array list of items
+                                items: programs?.map((var e) {
+                                  return DropdownMenuItem(
+                                    value: e,
+                                    child: Text(e.programAbbreviation),
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (var newValue) {
+                                  selectedProgram = newValue!;
+                                  selectedSession = null;
+                                  selectedSection = null;
+                                  _fetchSession(selectedDepartment?.id,
+                                      selectedProgram?.id);
+
+                                  setState(
+                                    () {},
+                                  );
+                                },
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 15),
+                          Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                border: Border.all(width: 1)),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<SessionsModel>(
+                                hint: const Text(
+                                  'Session',
+                                  style: TextStyle(
+                                    color: primaryColor,
+                                  ),
+                                ),
+
+                                isExpanded: true,
+                                // Initial Value
+                                value: selectedSession,
+
+                                // Down Arrow Icon
+                                icon: const Icon(Icons.keyboard_arrow_down),
+
+                                // Array list of items
+                                items: session?.map((var e) {
+                                  return DropdownMenuItem(
+                                    value: e,
+                                    child: Text(e.sessionTitle),
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (var newValue) {
+                                  selectedSession = newValue!;
+                                  selectedSection = null;
+                                  _fetchSection(selectedDepartment!.id,
+                                      selectedProgram!.id, selectedSession!.id);
+                                  setState(
+                                    () {},
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 15),
+                          Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                border: Border.all(width: 1)),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<SectionsModel>(
+                                hint: const Text(
+                                  'Section',
+                                  style: TextStyle(
+                                    color: primaryColor,
+                                  ),
+                                ),
+
+                                isExpanded: true,
+                                // Initial Value
+                                value: selectedSection,
+
+                                // Down Arrow Icon
+                                icon: const Icon(Icons.keyboard_arrow_down),
+
+                                // Array list of items
+                                items: sections?.map((var e) {
+                                  return DropdownMenuItem(
+                                    value: e,
+                                    child: Text(e.sectionTitle),
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (var newValue) {
+                                  selectedSection = newValue!;
+                                  setState(
+                                    () {},
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 15),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (selectedDepartment != null &&
+                                  selectedProgram != null &&
+                                  selectedSession != null &&
+                                  selectedSection != null) {
+                                _controller.animateToPage(
+                                  1,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeInOut,
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text('These fields are required')));
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: primaryColor,
+                              fixedSize: const Size(120, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            child: const Text(
+                              'NEXT',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  SingleChildScrollView(
+                    child: Container(
+                      child: Column(
+                        children: [
+                          const Img(),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Enter Personal Information',
+                            style: TextStyle(fontSize: 25),
+                          ),
+                          const SizedBox(height: 15),
+                          MyTextFormField(
+                              label: "Full Name",
+                              hint: "Full Name",
+                              controller: nameController,
+                              validator: (String? value) => value!.isEmpty
+                                  ? "This field is required"
+                                  : null),
+                          MyTextFormField(
+                              label: "Phone NO",
+                              hint: "Phone NO",
+                              controller: phoneController,
+                              validator: (String? value) => value!.isEmpty
+                                  ? "This field is required"
+                                  : null),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.0),
+                              border: Border.all(width: 1, color: primaryColor),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                hint: const Text(
+                                  'Gender',
+                                  style: TextStyle(
+                                    color: primaryColor,
+                                  ),
+                                ),
+
+                                isExpanded: true,
+                                // Initial Value
+                                value: selectedGender,
+
+                                // Down Arrow Icon
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: primaryColor,
+                                ),
+
+                                // Array list of items
+                                items: gender.map((e) {
+                                  return DropdownMenuItem(
+                                    value: e,
+                                    child: Text(e),
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (newValue) {
+                                  setState(
+                                    () {
+                                      selectedGender = newValue! as String?;
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          MyTextFormField(
+                              label: "Class Roll No",
+                              hint: "Class Roll No",
+                              controller: rollNoController,
+                              validator: (String? value) => value!.isEmpty
+                                  ? "This field is required"
+                                  : null),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate() &&
+                                  (selectedGender != null)) {
+                                _controller.animateToPage(
+                                  2,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeInOut,
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Gender is required')));
+                                setState(() {});
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: primaryColor,
+                              fixedSize: const Size(120, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            child: const Text(
+                              'NEXT',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    child: Container(
+                      // padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          const Img(),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Almost Done',
+                            style: TextStyle(fontSize: 25),
+                          ),
+                          const SizedBox(height: 15),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: TextFormField(
+                              obscureText: obscure,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              controller: passwordController,
+                              keyboardType: TextInputType.text,
+                              validator: (String? value) =>
+                                  value!.isEmpty || value.length < 8
+                                      ? "Password must be at-least 8 characters"
+                                      : null,
+                              decoration: InputDecoration(
+                                labelStyle:
+                                    const TextStyle(color: primaryColor),
+                                hintText: "Password",
+                                labelText: "Password",
+                                suffixIcon: GestureDetector(
+                                  onTap: () =>
+                                      setState(() => obscure = !obscure),
+                                  child: obscure
+                                      ? const Icon(
+                                          Icons.visibility,
+                                          color: primaryColor,
+                                        )
+                                      : const Icon(Icons.visibility_off,
+                                          color: primaryColor),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: primaryColor),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide:
+                                      const BorderSide(color: primaryColor),
+                                ),
+                                errorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: primaryColor),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: primaryColor),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: TextFormField(
+                              obscureText: obscure1,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (String? value) => value!.isEmpty ||
+                                      passwordController.text !=
+                                          confirmPasswordController.text
+                                  ? "Password does not match"
+                                  : null,
+                              controller: confirmPasswordController,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                labelStyle:
+                                    const TextStyle(color: primaryColor),
+                                hintText: "Confirm Password",
+                                labelText: "Confirm Password",
+                                suffixIcon: GestureDetector(
+                                  onTap: () =>
+                                      setState(() => obscure1 = !obscure1),
+                                  child: obscure1
+                                      ? const Icon(
+                                          Icons.visibility,
+                                          color: primaryColor,
+                                        )
+                                      : const Icon(Icons.visibility_off,
+                                          color: primaryColor),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: primaryColor),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide:
+                                      const BorderSide(color: primaryColor),
+                                ),
+                                errorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: primaryColor),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: primaryColor),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                print('pass');
+                              } else {
+                                setState(() {});
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: primaryColor,
+                              fixedSize: const Size(120, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            child: const Text(
+                              'Register',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
