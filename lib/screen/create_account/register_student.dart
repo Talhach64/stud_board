@@ -4,12 +4,15 @@ import 'package:stud_board/api_models/departments_model.dart';
 import 'package:stud_board/api_models/programs_model.dart';
 import 'package:stud_board/api_models/sections_model.dart';
 import 'package:stud_board/api_models/sessions_model.dart';
+import 'package:stud_board/api_models/student_model.dart';
 import 'package:stud_board/api_services/api_services.dart';
 import 'package:stud_board/screen/login.dart';
 import 'package:stud_board/widget/img.dart';
 import 'package:stud_board/widget/pass_widget.dart';
 import 'package:stud_board/widget/text_widget.dart';
 import '../../constant/constant.dart';
+import '../../widget/button.dart';
+import '../../widget/loading_icon.dart';
 
 class RegisterStudent extends StatefulWidget {
   const RegisterStudent({Key? key}) : super(key: key);
@@ -19,6 +22,7 @@ class RegisterStudent extends StatefulWidget {
 }
 
 class _RegisterStudentState extends State<RegisterStudent> {
+  late String email;
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController rollNoController = TextEditingController();
@@ -33,6 +37,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
   int _currentIndex = 0;
   bool obscure = true;
   bool obscure1 = true;
+  bool emailCheck = true;
 
   List<DepartmentsModel>? departments = [];
   DepartmentsModel? selectedDepartment;
@@ -134,6 +139,41 @@ class _RegisterStudentState extends State<RegisterStudent> {
       return null;
     }
     return null;
+  }
+
+  Future<dynamic>? registerStudent() async {
+    try {
+      final response = await Dio().post(
+        "https://nfc-master-api.onrender.com/api/student/register",
+        data: StudentModel(
+                department: selectedDepartment?.id,
+                program: selectedProgram?.id,
+                session: selectedSession?.id,
+                section: selectedSection?.id,
+                name: nameController.text,
+                email: email,
+                rollNo: rollNoController.text,
+                phoneNo: phoneController.text,
+                password: passwordController.text)
+            .toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${await APIService().getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        ),
+      );
+      emailCheck = true;
+
+      print("---------1--------");
+      print(response.data);
+      print("-------2-----------");
+      return response.data['email'];
+    } catch (e) {
+      print(e);
+      emailCheck = false;
+      return "already in use";
+    }
   }
 
   @override
@@ -473,6 +513,8 @@ class _RegisterStudentState extends State<RegisterStudent> {
                                   duration: const Duration(milliseconds: 500),
                                   curve: Curves.easeInOut,
                                 );
+                                email =
+                                    "${selectedSession!.sessionTitle}${selectedProgram!.programAbbreviation}${rollNoController.text}@undergrad.nfciet.edu.pk";
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
@@ -609,9 +651,61 @@ class _RegisterStudentState extends State<RegisterStudent> {
                           ),
                           SizedBox(height: 10),
                           ElevatedButton(
-                            onPressed: () {
+                            // 2k19bscs340@undergrad.nfciet.edu.pk
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                print('pass');
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return LoadingIcon(label: "Registering");
+                                    });
+                                var res = await registerStudent();
+                                Navigator.pop(context);
+                                print(res);
+                                // ignore: use_build_context_synchronously
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                          content: emailCheck
+                                              ? Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text("Your email is : $res",
+                                                      style: const TextStyle(
+                                                          color: Colors.red)),
+                                                  ElevatedButton(
+                                                    onPressed: (){
+                                                      Navigator.pop(context);
+                                                      Navigator.pop(context);
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>  Login()));
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                      backgroundColor: primaryColor,
+                                                      fixedSize: const Size(120, 40),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(8.0),
+                                                      ),
+                                                    ),
+                                                    child: const Text(
+                                                      'Login Now',
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.bold, fontSize: 15),
+                                                    ),
+                                                  ),
+
+
+                                                ],
+                                              )
+                                              : const Text("This email is already in use",
+                                                  style: TextStyle(
+                                                      color: Colors.red)));
+                                    });
+
+                                setState(() {});
                               } else {
                                 setState(() {});
                               }

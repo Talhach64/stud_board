@@ -82,7 +82,7 @@ class _StudentHomeState extends State<StudentHome> {
                 Icon: Icon(Icons.auto_graph),
               ),
               const MyListTile(
-                label: Text('Transcript'),
+                label: Text('Result'),
                 Icon: Icon(Icons.newspaper),
               ),
               const MyListTile(

@@ -93,33 +93,40 @@ class _LoginState extends State<Login> {
                             builder: (context) {
                               return LoadingIcon(label: "Logging In...");
                             });
-                        var token = await APIService().post(
-                            "login",
-                            LoginModel(
-                                    email:
-                                        emailController.text,
-                                    password: passwordController.text)
-                                .toJson());
-                        await APIService().setToken(token);
-                        var person = await APIService().getOne("get-user");
-                        await APIService().setPersonID(person["_id"]);
-                        Navigator.pop(context);
-                        if(person['role']=="Student")
+                        try{
+                          var token = await APIService().post(
+                              "login",
+                              LoginModel(
+                                  email:
+                                  emailController.text,
+                                  password: passwordController.text)
+                                  .toJson());
+                          await APIService().setToken(token);
+                          var person = await APIService().getOne("get-user");
+                          await APIService().setPersonID(person["_id"]);
+                          Navigator.pop(context);
+                          if(person['role']=="Student")
                           {
                             Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>  StudentHome()));}
-                        else if(person['role']=="Teacher")
-                        { Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const TeacherHome()));}
-                        else if(person['role']=="Admin")
-                        { Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AdminHome()));}
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>  StudentHome()));}
+                          else if(person['role']=="Teacher")
+                          { Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const TeacherHome()));}
+                          else if(person['role']=="Admin")
+                          { Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AdminHome()));}
+                        }
+                        catch(e){
+                          print(e);
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid Email")));
+                        }
                       } else {
                         setState(() {});
                       }

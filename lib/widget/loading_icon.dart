@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stud_board/constant/constant.dart';
 
 class LoadingIcon extends StatelessWidget {
   String? label;
@@ -10,7 +11,7 @@ class LoadingIcon extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 25, width: 25, child: CircularProgressIndicator()),
+          const SizedBox(height: 25, width: 25, child: CircularProgressIndicator(color: primaryColor)),
           const SizedBox(height: 20),
           Text(label!),
         ],
