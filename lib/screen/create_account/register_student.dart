@@ -8,10 +8,8 @@ import 'package:stud_board/api_models/student_model.dart';
 import 'package:stud_board/api_services/api_services.dart';
 import 'package:stud_board/screen/login.dart';
 import 'package:stud_board/widget/img.dart';
-import 'package:stud_board/widget/pass_widget.dart';
 import 'package:stud_board/widget/text_widget.dart';
 import '../../constant/constant.dart';
-import '../../widget/button.dart';
 import '../../widget/loading_icon.dart';
 
 class RegisterStudent extends StatefulWidget {

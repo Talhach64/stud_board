@@ -14,6 +14,20 @@ class TeacherHome extends StatefulWidget {
 }
 
 class _TeacherHomeState extends State<TeacherHome> {
+  String name= '';
+  @override
+  void initState() {
+    super.initState();
+    fetch();
+  }
+  void fetch()async{
+    var res = await APIService().getOne("get-user");
+    print(res);
+
+    setState(() {
+      name = res['name'];
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,6 +35,19 @@ class _TeacherHomeState extends State<TeacherHome> {
         drawer: Drawer(
           child: ListView(
             children: [
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: primaryColor,
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                ),
+                title: Text(
+                  name,
+                  style: const TextStyle(fontSize: 25, color: primaryColor),
+                ),
+              ),
               const MyListTile(
                 label: Text('Dashboard'),
                 Icon: Icon(Icons.home),
@@ -63,7 +90,7 @@ class _TeacherHomeState extends State<TeacherHome> {
           ),
         ),
         appBar: AppBar(
-          title: const Text('NFC IET TEACHER PORTAL'),
+          title: const Text("TEACHER'S PORTAL"),
           backgroundColor: primaryColor,
         ),
         body: Center(

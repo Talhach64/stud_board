@@ -43,7 +43,7 @@ dependencies:
   path_provider: ^2.0.12
   shared_preferences: ^2.0.17
   qr_code_scanner: ^1.0.1
-  event_schedule_calendar: ^1.1.1
+  syncfusion_flutter_calendar: ^21.2.6
 
 
 

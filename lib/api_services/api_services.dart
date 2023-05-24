@@ -46,6 +46,8 @@ class APIService {
           },
         ),
       );
+      print("got here");
+      print(response.data);
       switch (response.statusCode) {
         case 200:
           List<dynamic> data = response.data;

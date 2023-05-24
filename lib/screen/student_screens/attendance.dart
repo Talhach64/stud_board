@@ -1,21 +1,78 @@
-import 'package:event_schedule_calendar/event_schedule_calendar.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:stud_board/api_services/api_services.dart';
+import 'package:intl/intl.dart';
+import 'package:stud_board/constant/constant.dart';
 
-import '../../constant/constant.dart';
-
-class Attendance extends StatelessWidget {
+class Attendance extends StatefulWidget {
   const Attendance({Key? key}) : super(key: key);
+
+  @override
+  State<Attendance> createState() => _AttendanceState();
+}
+
+class _AttendanceState extends State<Attendance> {
+  List<dynamic>? data;
+
+  @override
+  void initState() {
+    _fetchAttendance();
+    super.initState();
+  }
+
+  Future<void> _fetchAttendance() async {
+    try {
+      final response = await Dio().get(
+        "https://nfc-master-api.onrender.com/api/attendance/student/calendar-data",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${await APIService().getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        ),
+      );
+      data = response.data;
+      setState(() {});
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  String transformDateFormat(String originalDate) {
+    DateTime dateTime = DateTime.parse(originalDate);
+    String transformedDate = DateFormat('MMM-dd-yyyy').format(dateTime);
+    return transformedDate;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Attendance Record'),
         backgroundColor: primaryColor,
+        title: const Text("Previous Attendance"),
       ),
-      body: SingleChildScrollView(
-        child: Container()
-      ),
+      body: data == null
+          ? const Center(child: CircularProgressIndicator(color: primaryColor))
+          : RefreshIndicator(
+              color: primaryColor,
+              onRefresh: _fetchAttendance,
+              child: ListView.builder(
+                itemCount: data == null ? 0 : data!.length,
+                itemBuilder: (context, i) {
+                  return Card(
+                    color: data![i]['color'] == '#ef5350'
+                        ? Colors.red
+                        : Colors.green,
+                    child: ListTile(
+                      title: Text(data![i]['title']),
+                      trailing: Text(
+                        transformDateFormat(data![i]['date']),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
     );
   }
 }

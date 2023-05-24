@@ -3,8 +3,8 @@ import 'package:stud_board/screen/login.dart';
 
 import 'student_screens/student_home.dart';
 
-class Splash extends StatelessWidget {
-  const Splash({Key? key}) : super(key: key);
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

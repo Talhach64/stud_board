@@ -1,16 +1,10 @@
-import 'package:dio/dio.dart';
-import 'package:event_schedule_calendar/event_schedule_calendar.dart';
 import 'package:flutter/material.dart';
-import 'package:stud_board/api_models/student_model.dart';
 import 'package:stud_board/api_services/api_services.dart';
 import 'package:stud_board/screen/login.dart';
 import 'package:stud_board/screen/student_screens/attendance.dart';
 import 'package:stud_board/screen/student_screens/scanner.dart';
 import 'package:stud_board/widget/list_tile.dart';
 import '../../constant/constant.dart';
-
-// register student ka forn complete krna hay
-
 class StudentHome extends StatefulWidget {
 
    StudentHome({Key? key,}) : super(key: key);
@@ -85,10 +79,6 @@ class _StudentHomeState extends State<StudentHome> {
                 label: Text('Result'),
                 Icon: Icon(Icons.newspaper),
               ),
-              const MyListTile(
-                label: Text('Certificate'),
-                Icon: Icon(Icons.star),
-              ),
               const Divider(height: 0),
               MyListTile(
                 label: const Text('Log Out'),
@@ -107,7 +97,7 @@ class _StudentHomeState extends State<StudentHome> {
           ),
         ),
         appBar: AppBar(
-          title: const Text('NFC IET STUDENT PORTAL'),
+          title: const Text('NFC IET STiUDENT PORTAL'),
           backgroundColor: primaryColor,
         ),
         body: const Center(
