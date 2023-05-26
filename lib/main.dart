@@ -13,8 +13,9 @@ void main() async {
   var directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   // final id = null;
-  var person = await APIService().getOne("get-user");
+
   final id = await APIService().getPersonID();
+  var person = await APIService().getOne("get-user");
 
   goTo() {
     if (person['role'] == "Student") {

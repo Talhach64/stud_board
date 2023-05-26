@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stud_board/api_models/teacher_model.dart';
 import 'package:stud_board/api_services/api_services.dart';
 import 'package:stud_board/screen/login.dart';
 import 'package:stud_board/screen/student_screens/scanner.dart';
@@ -14,18 +15,22 @@ class TeacherHome extends StatefulWidget {
 }
 
 class _TeacherHomeState extends State<TeacherHome> {
-  String name= '';
+  TeacherModel? teacher;
+  // String name= '';
   @override
   void initState() {
     super.initState();
     fetch();
   }
   void fetch()async{
-    var res = await APIService().getOne("get-user");
-    print(res);
+     teacher = await APIService().getOne("get-user");
+     print("-----------1-------------");
+
+    print(teacher);
+     print("-----------2-------------");
 
     setState(() {
-      name = res['name'];
+      // name = res['name'];
     });
   }
   @override
@@ -44,7 +49,7 @@ class _TeacherHomeState extends State<TeacherHome> {
                   ),
                 ),
                 title: Text(
-                  name,
+                  teacher?.name??'',
                   style: const TextStyle(fontSize: 25, color: primaryColor),
                 ),
               ),

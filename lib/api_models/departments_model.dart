@@ -30,3 +30,16 @@ class DepartmentsModel {
 
   Map<String, dynamic> toJson() => _$DepartmentsModelToJson(this);
 }
+
+@JsonSerializable(explicitToJson: true)
+class LocationModel {
+  int lat;
+  int lng;
+
+  LocationModel({required this.lat, required this.lng});
+
+  factory LocationModel.fromJson(Map<String, dynamic> json) =>
+      _$LocationModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LocationModelToJson(this);
+}

@@ -22,3 +22,15 @@ Map<String, dynamic> _$DepartmentsModelToJson(DepartmentsModel instance) =>
       'department_name': instance.departmentName,
       'department_abbreviation': instance.departmentAbbreviation,
     };
+
+LocationModel _$LocationModelFromJson(Map<String, dynamic> json) =>
+    LocationModel(
+      lat: json['lat'] as int,
+      lng: json['lng'] as int,
+    );
+
+Map<String, dynamic> _$LocationModelToJson(LocationModel instance) =>
+    <String, dynamic>{
+      'lat': instance.lat,
+      'lng': instance.lng,
+    };

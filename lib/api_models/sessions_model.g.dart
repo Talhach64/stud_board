@@ -13,6 +13,8 @@ SessionsModel _$SessionsModelFromJson(Map<String, dynamic> json) =>
       type: json['type'] as String,
       startingYear: json['starting_year'] as String,
       endingYear: json['ending_year'] as String,
+      department: json['department'] as String?,
+      program: json['program'] as String?,
     );
 
 Map<String, dynamic> _$SessionsModelToJson(SessionsModel instance) =>
@@ -22,4 +24,6 @@ Map<String, dynamic> _$SessionsModelToJson(SessionsModel instance) =>
       'type': instance.type,
       'starting_year': instance.startingYear,
       'ending_year': instance.endingYear,
+      'department': instance.department,
+      'program': instance.program,
     };

@@ -20,12 +20,17 @@ class SessionsModel {
   @JsonKey(name: 'ending_year')
   String endingYear;
 
+  String? department;
+  String? program;
+
   SessionsModel(
       {required this.id,
       required this.sessionTitle,
       required this.type,
       required this.startingYear,
-      required this.endingYear
+      required this.endingYear,
+       this.department,
+       this.program,
       });
 
   factory SessionsModel.fromJson(Map<String, dynamic> json) =>
