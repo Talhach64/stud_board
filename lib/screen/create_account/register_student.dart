@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:stud_board/api_models/dpss_model.dart';
-import 'package:stud_board/api_models/student_model.dart';
+import 'package:stud_board/api_models/dpss_models.dart';
+import 'package:stud_board/api_models/student_models.dart';
 import 'package:stud_board/api_services/api_services.dart';
 import 'package:stud_board/screen/login.dart';
 import 'package:stud_board/widget/img.dart';
@@ -57,9 +57,8 @@ class _RegisterStudentState extends State<RegisterStudent> {
 
   void _fetchDepartments() async {
     try {
-      departments = (await APIService().getAll("departments"))
-          ?.map((e) => DepartmentsModel.fromJson(e))
-          .toList();
+      departments = (await APIService().getAll("departments"))?.map((e) => DepartmentsModel.fromJson(e)).toList();
+      print("department fetched");
       setState(() {});
     } catch (e) {
       print(e);
@@ -100,9 +99,8 @@ class _RegisterStudentState extends State<RegisterStudent> {
         ),
       );
       List<dynamic> data = response.data;
-
+      print(data);
       session = (data).map((e) => SessionsModel.fromJson(e)).toList();
-
       setState(() {});
     } catch (error) {
       print(error);
@@ -140,7 +138,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
     try {
       final response = await Dio().post(
         "https://nfc-master-api.onrender.com/api/student/register",
-        data: StudentModel(
+        data: RegisterStudentModel(
                 department: selectedDepartment?.id,
                 program: selectedProgram?.id,
                 session: selectedSession?.id,
@@ -188,6 +186,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
                   });
                 },
                 controller: _controller,
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   SingleChildScrollView(
                     child: Container(
@@ -731,3 +730,4 @@ class _RegisterStudentState extends State<RegisterStudent> {
     );
   }
 }
+

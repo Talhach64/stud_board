@@ -4,29 +4,43 @@ import 'package:stud_board/screen/login.dart';
 import 'package:stud_board/screen/student_screens/attendance.dart';
 import 'package:stud_board/screen/student_screens/scanner.dart';
 import 'package:stud_board/widget/list_tile.dart';
+import '../../api_models/student_models.dart';
 import '../../constant/constant.dart';
-class StudentHome extends StatefulWidget {
 
-   StudentHome({Key? key,}) : super(key: key);
+class StudentHome extends StatefulWidget {
+  StudentHome({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StudentHome> createState() => _StudentHomeState();
 }
 
 class _StudentHomeState extends State<StudentHome> {
- String name= '';
+  StudentModel? studentData;
+  int _selectedIndex = 0; // Currently selected drawer item index
+
+  void _onDrawerItemTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    Navigator.pop(context); // Closes the drawer
+  }
+
   @override
   void initState() {
     super.initState();
     fetch();
   }
-    void fetch()async{
-   var res = await APIService().getOne("get-user");
 
-   setState(() {
-     name = res['name'];
-   });
+  Future<void> fetch() async {
+    var data = await APIService().getOne("get-user");
+    print(data);
+    studentData = StudentModel.fromJson(data);
+    print(studentData!.name);
+    setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -34,7 +48,7 @@ class _StudentHomeState extends State<StudentHome> {
         drawer: Drawer(
           child: ListView(
             children: [
-               ListTile(
+              ListTile(
                 leading: const CircleAvatar(
                   backgroundColor: primaryColor,
                   child: Icon(
@@ -42,45 +56,56 @@ class _StudentHomeState extends State<StudentHome> {
                     color: Colors.white,
                   ),
                 ),
-                title: Text(
-                  name,
-                  style: const TextStyle(fontSize: 25, color: primaryColor),
-                ),
+                title: studentData != null
+                    ? Text(studentData!.name,
+                        style:
+                            const TextStyle(fontSize: 25, color: primaryColor))
+                    : const CircularProgressIndicator(),
               ),
-              const MyListTile(
+              MyListTile(
+                onTap: () => _onDrawerItemTap(0),
+                selected: _selectedIndex == 0,
                 label: Text('Home'),
                 Icon: Icon(Icons.home),
               ),
               MyListTile(
-                label: Text('Attendance'),
-                Icon: Icon(Icons.add_chart_outlined),
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Attendance(),
-                  ),
-                ),
-              ),
+                  selected: _selectedIndex == 1,
+                  label: Text('Attendance'),
+                  Icon: Icon(Icons.add_chart_outlined),
+                  onTap: () {
+                    _onDrawerItemTap(1);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Attendance()));
+                  }),
               MyListTile(
+                selected: _selectedIndex == 2,
                 label: Text('Scanner'),
                 Icon: Icon(Icons.document_scanner),
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QRViewExample(),
-                  ),
-                ),
+                onTap: () {
+                  _onDrawerItemTap(2);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QRViewExample(),
+                    ),
+                  );
+                },
               ),
-              const MyListTile(
+              MyListTile(
+                onTap: () => _onDrawerItemTap(3),
+                selected: _selectedIndex == 3,
                 label: Text('Progress'),
                 Icon: Icon(Icons.auto_graph),
               ),
-              const MyListTile(
+              MyListTile(
+                onTap: () => _onDrawerItemTap(4),
+                selected: _selectedIndex == 4,
                 label: Text('Result'),
                 Icon: Icon(Icons.newspaper),
               ),
               const Divider(height: 0),
               MyListTile(
+                selected: false,
                 label: const Text('Log Out'),
                 Icon: const Icon(Icons.logout),
                 onTap: () {
@@ -97,7 +122,7 @@ class _StudentHomeState extends State<StudentHome> {
           ),
         ),
         appBar: AppBar(
-          title: const Text('NFC IET STiUDENT PORTAL'),
+          title: const Text('NFC IET STUDENT PORTAL'),
           backgroundColor: primaryColor,
         ),
         body: const Center(

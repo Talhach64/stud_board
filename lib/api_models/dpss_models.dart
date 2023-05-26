@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:stud_board/api_models/teacher_models.dart';
 
-part 'dpss_model.g.dart';
+part 'dpss_models.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class DepartmentsModel {
@@ -114,8 +115,8 @@ class SessionsModel {
   @JsonKey(name: 'ending_year')
   String endingYear;
 
-  String? department;
-  String? program;
+  DepartmentsModel? department;
+  Program? program;
 
   SessionsModel(
       {required this.id,

@@ -56,22 +56,30 @@ class _AttendanceState extends State<Attendance> {
           : RefreshIndicator(
               color: primaryColor,
               onRefresh: _fetchAttendance,
-              child: ListView.builder(
-                itemCount: data == null ? 0 : data!.length,
-                itemBuilder: (context, i) {
-                  return Card(
-                    color: data![i]['color'] == '#ef5350'
-                        ? Colors.red
-                        : Colors.green,
-                    child: ListTile(
-                      title: Text(data![i]['title']),
-                      trailing: Text(
-                        transformDateFormat(data![i]['date']),
-                      ),
+              child: data!.isEmpty
+                  ? const Center(child: Text("No Data Found", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.black45),))
+                  : ListView.builder(
+                      itemCount: data == null ? 0 : data!.length,
+                      itemBuilder: (context, i) {
+                        return Card(
+                          color: data![i]['color'] == '#ef5350'
+                              ? Colors.red
+                              : Colors.green,
+                          child: ListTile(
+                            leading: Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Text(
+                                "${i + 1}",
+                              ),
+                            ),
+                            title: Text(data![i]['title']),
+                            trailing: Text(
+                              transformDateFormat(data![i]['date']),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ),
     );
   }

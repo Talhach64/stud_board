@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 
-import '../api_models/dpss_model.dart';
+import '../api_models/dpss_models.dart';
 
 class APIService {
   final Dio _dio = Dio();
@@ -46,8 +46,6 @@ class APIService {
           },
         ),
       );
-      print("got here");
-      print(response.data);
       switch (response.statusCode) {
         case 200:
           List<dynamic> data = response.data;

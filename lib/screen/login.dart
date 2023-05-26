@@ -10,7 +10,7 @@ import 'package:stud_board/widget/img.dart';
 import 'package:stud_board/widget/loading_icon.dart';
 import 'package:stud_board/widget/text_widget.dart';
 
-import '../api_models/student_model.dart';
+import '../api_models/student_models.dart';
 import '../constant/constant.dart';
 import '../widget/pass_widget.dart';
 import 'admin_screens/admin_home.dart';
@@ -125,7 +125,7 @@ class _LoginState extends State<Login> {
                         catch(e){
                           print(e);
                           Navigator.pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid Email")));
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid Email or Password")));
                         }
                       } else {
                         setState(() {});

@@ -1,9 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:stud_board/api_models/teacher_model.dart';
+import 'package:stud_board/api_models/teacher_models.dart';
 import 'package:stud_board/api_services/api_services.dart';
 import 'package:stud_board/screen/login.dart';
-import 'package:stud_board/screen/student_screens/scanner.dart';
 import 'package:stud_board/widget/list_tile.dart';
 
 import '../../constant/constant.dart';
@@ -16,7 +14,9 @@ class TeacherHome extends StatefulWidget {
 }
 
 class _TeacherHomeState extends State<TeacherHome> {
-  TeacherModel? teacher;
+  TeacherModel? teacherData;
+  List<Subject>? subject = [];
+  int _selectedIndex = 0; // Currently selected drawer item index
 
   @override
   void initState() {
@@ -24,10 +24,17 @@ class _TeacherHomeState extends State<TeacherHome> {
     super.initState();
   }
 
-  void fetch() async {
+  Future<void> fetch() async {
     var data = await APIService().getOne("get-user");
-    teacher = TeacherModel.fromJson(data);
+    teacherData = TeacherModel.fromJson(data);
     setState(() {});
+  }
+
+  void _onDrawerItemTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    Navigator.pop(context); // Closes the drawer
   }
 
   @override
@@ -46,33 +53,36 @@ class _TeacherHomeState extends State<TeacherHome> {
                   ),
                 ),
                 title: Text(
-                  teacher?.name ?? 'demo',
+                  teacherData?.name ?? 'demo',
                   style: const TextStyle(fontSize: 25, color: primaryColor),
                 ),
               ),
-              const MyListTile(
-                label: Text('Dashboard'),
-                Icon: Icon(Icons.home),
-              ),
-              const MyListTile(
-                  label: Text('Mark Attendance'),
-                  Icon: Icon(Icons.add_chart_outlined)),
               MyListTile(
-                label: Text('Attendance Records'),
-                Icon: Icon(Icons.document_scanner),
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QRViewExample(),
-                  ),
-                ),
+                onTap: () => _onDrawerItemTap(0),
+                selected: _selectedIndex == 0,
+                label:  const Text('Home'),
+                Icon:  const Icon(Icons.home),
               ),
-              const MyListTile(
-                label: Text('Result Forms'),
-                Icon: Icon(Icons.auto_graph),
+              MyListTile(
+                  onTap: () => _onDrawerItemTap(1),
+                  selected: _selectedIndex == 1,
+                  label:  const Text('Mark Attendance'),
+                  Icon:  const Icon(Icons.add_chart_outlined)),
+              MyListTile(
+                label: const Text('Attendance Records'),
+                Icon: const Icon(Icons.document_scanner),
+                onTap: () => _onDrawerItemTap(2),
+                selected: _selectedIndex == 2,
+              ),
+              MyListTile(
+                onTap: () => _onDrawerItemTap(3),
+                selected: _selectedIndex == 3,
+                label: const Text('Result Records'),
+                Icon: const Icon(Icons.auto_graph),
               ),
               const Divider(height: 0),
               MyListTile(
+                selected: false,
                 label: const Text('Log Out'),
                 Icon: const Icon(Icons.logout),
                 onTap: () {
@@ -89,15 +99,40 @@ class _TeacherHomeState extends State<TeacherHome> {
           ),
         ),
         appBar: AppBar(
-          title: const Text("TEACHER'S PORTAL"),
+          title: const Text("NFC IET Portal"),
           backgroundColor: primaryColor,
         ),
-        body: Center(
-          child: Text(
-            "DashBoard",
-            style: TextStyle(fontSize: 30),
-          ),
-        ),
+        body: teacherData == null
+            ? const Center(
+                child: CircularProgressIndicator(color: primaryColor))
+            : RefreshIndicator(
+                color: primaryColor,
+                onRefresh: fetch,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView.builder(
+                    itemCount:
+                        teacherData == null ? 0 : teacherData!.subjects.length,
+                    itemBuilder: (context, i) {
+                      TeacherModel? data = teacherData;
+                      return Card(
+                        child: ListTile(
+                          leading: Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Text(
+                              "${i + 1}",
+                            ),
+                          ),
+                          title: Text(
+                              "${data?.subjects[i].subject.session.session_title}     ${data?.subjects[i].subject.program.program_abbreviation}"),
+                          subtitle:
+                              Text(data!.subjects[i].subject.subjectTitle),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
       ),
     );
   }
