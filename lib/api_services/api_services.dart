@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 
-import '../api_models/departments_model.dart';
+import '../api_models/dpss_model.dart';
 
 class APIService {
   final Dio _dio = Dio();
@@ -67,35 +67,6 @@ class APIService {
     }
   }
 
-  Future<List<dynamic>?> getAllDPSS() async {
-    try {
-      final response = await _dio.get(
-        "https://nfc-master-api.onrender.com/api/programs?department=63ff0d33f4bceba698b531f1",
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer ${await getToken()}',
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-        ),
-      );
-      switch (response.statusCode) {
-        case 200:
-          List<dynamic> data = response.data;
-          return data;
-        case 401:
-          throw Exception('Unauthorized');
-        case 404:
-          throw Exception('Not found');
-        case 500:
-          throw Exception('Internal server error');
-        default:
-          throw Exception('An unexpected error occurred');
-      }
-    } catch (error) {
-      print(error);
-      return null;
-    }
-  }
 
   Future<dynamic>? getOne(String route) async {
     try {
@@ -108,12 +79,13 @@ class APIService {
           },
         ),
       );
-      print("done");
-      print(await response.data);
-      print("done");
+      // print("done");
+      // print(response.data);
+      // print("done");
 
       switch (response.statusCode) {
         case 200:
+
           return response.data;
         case 401:
           throw Exception('Unauthorized');

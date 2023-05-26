@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:stud_board/api_models/teacher_model.dart';
 import 'package:stud_board/api_services/api_services.dart';
@@ -16,23 +17,19 @@ class TeacherHome extends StatefulWidget {
 
 class _TeacherHomeState extends State<TeacherHome> {
   TeacherModel? teacher;
-  // String name= '';
+
   @override
   void initState() {
-    super.initState();
     fetch();
+    super.initState();
   }
-  void fetch()async{
-     teacher = await APIService().getOne("get-user");
-     print("-----------1-------------");
 
-    print(teacher);
-     print("-----------2-------------");
-
-    setState(() {
-      // name = res['name'];
-    });
+  void fetch() async {
+    var data = await APIService().getOne("get-user");
+    teacher = TeacherModel.fromJson(data);
+    setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -49,7 +46,7 @@ class _TeacherHomeState extends State<TeacherHome> {
                   ),
                 ),
                 title: Text(
-                  teacher?.name??'',
+                  teacher?.name ?? 'demo',
                   style: const TextStyle(fontSize: 25, color: primaryColor),
                 ),
               ),
@@ -74,9 +71,6 @@ class _TeacherHomeState extends State<TeacherHome> {
                 label: Text('Result Forms'),
                 Icon: Icon(Icons.auto_graph),
               ),
-
-
-
               const Divider(height: 0),
               MyListTile(
                 label: const Text('Log Out'),

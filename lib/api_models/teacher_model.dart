@@ -7,16 +7,16 @@ class TeacherModel {
   @JsonKey(name: '_id')
   String id;
   String name;
-  String email;
-  String phoneNo;
-  String role;
+  // String email;
+  // String phoneNo;
+  // String role;
 
   TeacherModel({
     required this.id,
     required this.name,
-    required this.email,
-    required this.phoneNo,
-    required this.role,
+    // required this.email,
+    // required this.phoneNo,
+    // required this.role,
   });
 
   factory TeacherModel.fromJson(Map<String, dynamic> json) =>

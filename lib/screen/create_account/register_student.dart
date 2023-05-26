@@ -1,9 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:stud_board/api_models/departments_model.dart';
-import 'package:stud_board/api_models/programs_model.dart';
-import 'package:stud_board/api_models/sections_model.dart';
-import 'package:stud_board/api_models/sessions_model.dart';
+import 'package:stud_board/api_models/dpss_model.dart';
 import 'package:stud_board/api_models/student_model.dart';
 import 'package:stud_board/api_services/api_services.dart';
 import 'package:stud_board/screen/login.dart';
