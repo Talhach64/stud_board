@@ -5,6 +5,7 @@ import 'package:stud_board/screen/login.dart';
 import 'package:stud_board/widget/list_tile.dart';
 
 import '../../constant/constant.dart';
+import 'mark_attendance.dart';
 
 class TeacherHome extends StatefulWidget {
   const TeacherHome({Key? key}) : super(key: key);
@@ -60,14 +61,22 @@ class _TeacherHomeState extends State<TeacherHome> {
               MyListTile(
                 onTap: () => _onDrawerItemTap(0),
                 selected: _selectedIndex == 0,
-                label:  const Text('Home'),
-                Icon:  const Icon(Icons.home),
+                label: const Text('Home'),
+                Icon: const Icon(Icons.home),
               ),
               MyListTile(
-                  onTap: () => _onDrawerItemTap(1),
+                  onTap: () {
+                    _onDrawerItemTap(1);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MarkAttendance(),
+                      ),
+                    );
+                  },
                   selected: _selectedIndex == 1,
-                  label:  const Text('Mark Attendance'),
-                  Icon:  const Icon(Icons.add_chart_outlined)),
+                  label: const Text('Mark Attendance'),
+                  Icon: const Icon(Icons.add_chart_outlined)),
               MyListTile(
                 label: const Text('Attendance Records'),
                 Icon: const Icon(Icons.document_scanner),
