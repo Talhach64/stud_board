@@ -83,7 +83,6 @@ class APIService {
 
       switch (response.statusCode) {
         case 200:
-
           return response.data;
         case 401:
           throw Exception('Unauthorized');
@@ -113,7 +112,7 @@ class APIService {
     );
     switch (res.statusCode) {
       case 202:
-        return res.data['token'];
+        return res.data;
       case 401:
         throw Exception('Unauthorized');
       case 404:

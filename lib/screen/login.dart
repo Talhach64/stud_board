@@ -9,8 +9,6 @@ import 'package:stud_board/screen/teacher_screens/teacher_home.dart';
 import 'package:stud_board/widget/img.dart';
 import 'package:stud_board/widget/loading_icon.dart';
 import 'package:stud_board/widget/text_widget.dart';
-
-import '../api_models/student_models.dart';
 import '../constant/constant.dart';
 import '../widget/pass_widget.dart';
 import 'admin_screens/admin_home.dart';
@@ -34,6 +32,7 @@ class _LoginState extends State<Login> {
     passwordController.text = "aliabbas";
     super.initState();
   }
+
   @override
   void dispose() {
     emailController.dispose();
@@ -93,39 +92,41 @@ class _LoginState extends State<Login> {
                             builder: (context) {
                               return LoadingIcon(label: "Logging In...");
                             });
-                        try{
-                          var token = await APIService().post(
+                        try {
+                          var data = await APIService().post(
                               "login",
                               LoginModel(
-                                  email:
-                                  emailController.text,
-                                  password: passwordController.text)
+                                      email: emailController.text,
+                                      password: passwordController.text)
                                   .toJson());
+                          print(data['token']);
+                          var token = data['token'];
                           await APIService().setToken(token);
                           var person = await APIService().getOne("get-user");
                           await APIService().setPersonID(person["_id"]);
                           Navigator.pop(context);
-                          if(person['role']=="Student")
-                          {
+                          if (person['role'] == "Student") {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>  StudentHome()));}
-                          else if(person['role']=="Teacher")
-                          { Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const TeacherHome()));}
-                          else if(person['role']=="Admin")
-                          { Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const AdminHome()));}
-                        }
-                        catch(e){
+                                    builder: (context) => StudentHome()));
+                          } else if (person['role'] == "Teacher") {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const TeacherHome()));
+                          } else if (person['role'] == "Admin") {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const AdminHome()));
+                          }
+                        } catch (e) {
                           print(e);
                           Navigator.pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid Email or Password")));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text("Invalid Email or Password")));
                         }
                       } else {
                         setState(() {});

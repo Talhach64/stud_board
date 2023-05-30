@@ -12,10 +12,6 @@ class DepartmentsModel {
   String departmentName;
   @JsonKey(name: 'department_abbreviation')
   String departmentAbbreviation;
-
-  // @JsonKey(name: 'no_of_programs')
-  // int noOfPrograms;
-
   DepartmentsModel({
     required this.id,
     required this.departmentName,
@@ -75,23 +71,8 @@ class SectionsModel {
   String? id;
   @JsonKey(name: 'section_title')
   String sectionTitle;
-
-  // DepartmentsModel department;
-  // ProgramsModel program;
-  // SessionsModel session;
-  // @JsonKey(name: 'session_title')
-  // String sessionTitle;
-  // String type;
-  // @JsonKey(name: 'starting_year')
-  // String? startingYear;
-  // @JsonKey(name: 'ending_year')
-  // String endingYear;
-
   SectionsModel({
     required this.id,
-    // required this.department,
-    // required this.program,
-    // required this.session,
     required this.sectionTitle,
   });
 

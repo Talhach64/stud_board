@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:stud_board/api_models/teacher_models.dart';
 
@@ -21,6 +22,9 @@ class _MarkAttendanceState extends State<MarkAttendance> {
 
   List<String>? subjects = [];
   String? selectedSubject;
+  //
+  // List<SectionsModel>? sections = [];
+  // SectionsModel? selectedSection;
 
   @override
   void initState() {
@@ -29,16 +33,38 @@ class _MarkAttendanceState extends State<MarkAttendance> {
   }
 
   Future<void> fetch() async {
-    var data = await APIService().getOne("get-user");
-    teacherData = TeacherModel.fromJson(data);
-
+    var user = await APIService().getOne("get-user");
+    teacherData = TeacherModel.fromJson(user);
     for (var e in teacherData!.subjects) {
       subjects?.add(e.subject.subjectTitle);
     }
     print(subjects);
     setState(() {});
   }
-
+  // Future<List<dynamic>?> _fetchSection(deptID, progamID, sessionID) async {
+  //   try {
+  //     final response = await Dio().get(
+  //       "https://nfc-master-api.onrender.com/api/sections?department=$deptID&program=$progamID&session=$sessionID",
+  //       options: Options(
+  //         headers: {
+  //           'Authorization': 'Bearer ${await APIService().getToken()}',
+  //           'Content-Type': 'application/json; charset=UTF-8',
+  //         },
+  //       ),
+  //     );
+  //     List<dynamic> data = response.data;
+  //     print(response.data);
+  //     print("here is error");
+  //     sections = (data).map((e) => SectionsModel.fromJson(e)).toList();
+  //     print("error");
+  //
+  //     setState(() {});
+  //   } catch (error) {
+  //     print(error);
+  //     return null;
+  //   }
+  //   return null;
+  // }
 
 
   @override
@@ -88,6 +114,9 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                       onChanged: (var newValue) {
 
                         selectedSubject = newValue!;
+
+                        // _fetchSection(selectedDepartment!.id, selectedProgram!.id, selectedSession!.id);
+
                         // _fetchPrograms(selectedDepartment?.id);
                         setState(
                               () {},
