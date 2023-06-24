@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:stud_board/demo/h.dart';
 import 'package:stud_board/screen/admin_screens/admin_home.dart';
 import 'package:stud_board/screen/login.dart';
 import 'package:stud_board/screen/student_screens/student_home.dart';
@@ -14,16 +15,21 @@ void main() async {
   var directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   // final id = null;
-
+var user;
   final id = await APIService().getPersonID();
-  var person = await APIService().getOne("get-user");
+  try{
+     user = await APIService().getOne("get-user");
+  }catch(e){
+
+
+  }
 
   goTo() {
-    if (person['role'] == "Student") {
+    if (user['role'] == "Student") {
       return StudentHome();
-    } else if (person['role'] == "Teacher") {
+    } else if (user['role'] == "Teacher") {
       return const TeacherHome();
-    } else if (person['role'] == "Admin") {
+    } else if (user['role'] == "Admin") {
       return const AdminHome();
     }
   }
@@ -31,7 +37,8 @@ void main() async {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: (id?.isNotEmpty ?? false) ? Login() : const SplashScreen(),
+      home: StudentList()
+      // home: (id?.isNotEmpty ?? false) ? goTo() : const SplashScreen(),
     ),
   );
 }

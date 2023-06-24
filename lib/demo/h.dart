@@ -1,120 +1,99 @@
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-//
-// class HomePage extends StatefulWidget {
-//   // static final pageName = '/HomePage';
-//
-//   const HomePage({Key? key}) : super(key: key);
-//
-//   @override
-//   _HomePageState createState() => _HomePageState();
-// }
-//
-// class _HomePageState extends State<HomePage> {
-//   int currentIndex = 0;
-//   final List<Widget> tabs = [
-//     PageView1(),
-//     AllAppointments(),
-//     const Center(child: Text('Page 1')),
-//   ];
-//
-//   void _p() async {
-//     print(await APIService().getAccessToken());
-//     print(await APIService().getPersonID());
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     _p();
-//     return SafeArea(
-//       child: Scaffold(
-//         appBar: AppBar(
-//           elevation: 0.0,
-//
-//           shape: const RoundedRectangleBorder(
-//             borderRadius: BorderRadius.only(
-//                 bottomLeft: Radius.circular(15),
-//                 bottomRight: Radius.circular(15)),
-//           ),
-//           // toolbarHeight: 100,
-//           title: Padding(
-//             padding: const EdgeInsets.only(top: 10.0),
-//             child: Image.asset(
-//               imagePath,
-//               height: 50,
-//             ),
-//           ),
-//           centerTitle: true,
-//           actions: [
-//             currentIndex == 2
-//                 ? GestureDetector(onTap: () {}, child: const Padding(
-//               padding: EdgeInsets.only(right: 20.0),
-//               child: Center(child: Text('Sign out')),
-//             ))
-//                 : const Text('')
-//           ],
-//           bottom: PreferredSize(
-//             preferredSize: const Size.fromHeight(70),
-//             child: Padding(
-//               padding: const EdgeInsets.only(bottom: 25.0),
-//               child: Text(getPageTile(currentIndex),
-//                   style: const TextStyle(
-//                       color: Colors.white,
-//                       fontSize: 30.0,
-//                       fontWeight: FontWeight.bold)),
-//             ),
-//           ),
-//         ),
-//         body: tabs[currentIndex],
-//         bottomNavigationBar: BottomNavigationBar(
-//           backgroundColor: primaryColor,
-//           onTap: (value) {
-//             currentIndex = value;
-//             print('$value');
-//             setState(() {});
-//             // Respond to item press.
-//           },
-//           items: const[
-//              BottomNavigationBarItem(
-//               label: '',
-//               icon: Icon(
-//                 Icons.home,
-//                 size: 40,
-//                 color: Colors.white,
-//               ),
-//             ),
-//              BottomNavigationBarItem(
-//               label: '',
-//               icon: Icon(
-//                 CupertinoIcons.calendar,
-//                 size: 40,
-//                 color: Colors.white,
-//               ),
-//             ),
-//              BottomNavigationBarItem(
-//               label: '',
-//               icon: Icon(
-//                 Icons.account_circle_sharp,
-//                 size: 40,
-//                 color: Colors.white,
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-//
-//   String getPageTile(int pageIndex) {
-//     switch (pageIndex) {
-//       case 0:
-//         return "Service My Woody";
-//       case 1:
-//         return "Appointments";
-//       case 2:
-//         return "profile";
-//       default:
-//         return "Undefined index";
-//     }
-//   }
-// }
+import 'package:flutter/material.dart';
+
+class Student {
+  final String name;
+  bool isChecked1;
+  bool isChecked2;
+
+  Student(this.name, this.isChecked1, this.isChecked2);
+}
+
+class StudentList extends StatefulWidget {
+  @override
+  _StudentListState createState() => _StudentListState();
+}
+
+class _StudentListState extends State<StudentList> {
+  List<Student> students = [];
+  bool selectAll = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Populate the list with student names
+    for (int i = 1; i <= 10; i++) {
+      students.add(Student('Student $i', false, false));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Student List'),
+      ),
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text('Select All'),
+              Checkbox(
+                value: selectAll,
+                onChanged: (bool? value) {
+                  setState(() {
+                    selectAll = value!;
+                    for (var student in students) {
+                      student.isChecked1 = value;
+                    }
+                  });
+                },
+              ),
+              SizedBox(width: 64)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Text('Present'),
+              SizedBox(width: 10),
+              Text('Leave'),
+              SizedBox(width: 20)
+            ],
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: students.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(students[index].name),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Checkbox(
+                        value: students[index].isChecked1,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            students[index].isChecked1 = value!;
+                          });
+                        },
+                      ),
+                      Checkbox(
+                        value: students[index].isChecked2,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            students[index].isChecked2 = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
