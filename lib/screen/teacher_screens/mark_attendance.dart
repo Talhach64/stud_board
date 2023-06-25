@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:stud_board/api_models/teacher_models.dart';
-
+import '../../api_models/attendance_models.dart';
 import '../../api_models/dpss_models.dart';
 import '../../api_services/api_services.dart';
 import '../../constant/constant.dart';
+import '../../widget/loading_icon.dart';
 
 class MarkAttendance extends StatefulWidget {
   const MarkAttendance({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
   DepartmentsModel? selectedDepartment;
 
   TeacherModel? teacherData;
-  DateTime? selectedDate;
+  DateTime selectedDate = DateTime.now();
   String? formattedDate;
 
   List<String>? subjects = [];
@@ -35,6 +36,10 @@ class _MarkAttendanceState extends State<MarkAttendance> {
   List<String> creditHour = ["1", "2", "3", "4", "5"];
   String? selectedCreditHour;
 
+  List<AttendanceStudentDataModel> students = [];
+  bool selectAll = false;
+  List<AttendanceStudent> updatedStudent = [];
+
   @override
   void initState() {
     fetch();
@@ -45,6 +50,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
   void fetchDate() {
     formattedDate = Jiffy.parseFromDateTime(DateTime.now()).yMMMMd;
   }
+
   Future<void> fetch() async {
     var user = await APIService().getOne("get-user");
     teacherData = TeacherModel.fromJson(user);
@@ -68,6 +74,33 @@ class _MarkAttendanceState extends State<MarkAttendance> {
       print(response.data);
       print("here is error");
       sections = (data).map((e) => SectionsModel.fromJson(e)).toList();
+      print("error");
+
+      setState(() {});
+    } catch (error) {
+      print(error);
+      return null;
+    }
+    return null;
+  }
+
+  Future<List<dynamic>?> _fetchStudents(
+      deptID, progamID, sessionID, sectionID) async {
+    try {
+      final response = await Dio().get(
+        "https://nfc-master-api.onrender.com/api/attendance-student-data?department=$deptID&program=$progamID&session=$sessionID&section=$sectionID",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${await APIService().getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        ),
+      );
+      List<dynamic> data = response.data;
+      print(data);
+      print("here is error");
+      students =
+          (data).map((e) => AttendanceStudentDataModel.fromJson(e)).toList();
       print("error");
 
       setState(() {});
@@ -176,10 +209,23 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                       // After selecting the desired option,it will
                       // change button value to selected value
                       onChanged: (var newValue) {
+                        updatedStudent = [];
                         selectedSection = null;
                         selectedSection = newValue!;
+                        _fetchStudents(
+                            selectedSubject!.subject.department.id,
+                            selectedSubject!.subject.program.id,
+                            selectedSubject!.subject.session.id,
+                            selectedSection!.id);
                         setState(
-                          () {},
+                          () {
+                            print(selectedSubject!.subject.department.id);
+                            print(selectedSubject!.subject.program.id);
+                            print(selectedSubject!.subject.session.id);
+                            print(selectedSubject!.subject.semester.id);
+                            print(selectedSection!.id);
+                            print(selectedSubject!.subject.id);
+                          },
                         );
                       },
                     ),
@@ -218,7 +264,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                       // After selecting the desired option,it will
                       // change button value to selected value
                       onChanged: (var newValue) {
-                        selectedSubjectType = newValue;
+                        selectedSubjectType = newValue!;
                         setState(
                           () {},
                         );
@@ -236,7 +282,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       hint: const Text(
-                        'Subject Type',
+                        'Credit Hours',
                         style: TextStyle(
                           color: primaryColor,
                         ),
@@ -268,7 +314,6 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                   ),
                 ),
                 const SizedBox(height: 15),
-
                 Row(
                   children: [
                     Expanded(
@@ -276,32 +321,33 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                         height: 60,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            border:
-                            Border.all(color: Colors.black)),
+                            border: Border.all(color: Colors.black)),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('$formattedDate', style: const TextStyle(fontSize: 15),),
+                              Text(
+                                '$formattedDate',
+                                style: const TextStyle(fontSize: 15),
+                              ),
                               GestureDetector(
                                   onTap: () async {
-                                    DateTime? date =
-                                    await showDatePicker(
+                                    DateTime? date = await showDatePicker(
                                         context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime((DateTime.now().year - 1)),
-                                        lastDate: DateTime((DateTime.now().year + 1)));
+                                        initialDate: selectedDate,
+                                        firstDate:
+                                            DateTime((DateTime.now().year - 1)),
+                                        lastDate: DateTime(
+                                            (DateTime.now().year + 1)));
                                     if (date != null) {
                                       selectedDate = date;
                                     }
-                                    formattedDate = Jiffy.parseFromDateTime(selectedDate!).yMMMMd;
-
+                                    formattedDate =
+                                        Jiffy.parseFromDateTime(selectedDate)
+                                            .yMMMMd;
 
                                     setState(() {});
-
                                   },
                                   child: const Icon(
                                     CupertinoIcons.calendar,
@@ -315,7 +361,46 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                 ),
                 const SizedBox(height: 15),
                 GestureDetector(
-                  onTap: (){},
+                  onTap: () async {
+                    updatedStudent = students.map((e) {
+                      return AttendanceStudent(
+                        student: e.id,
+                        // Assign the name property from AttendanceStudentDataModel
+                        present: e.present,
+                        leave: e.leave,
+                      );
+                    }).toList();
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return LoadingIcon(label: "Almost Done");
+                        });
+                    try {
+                      var res = await APIService().post(
+                          "attendance/student",
+                          AttendanceStudentsModel(
+                                  teacher: teacherData!.id,
+                                  department:
+                                      selectedSubject!.subject.department.id,
+                                  program: selectedSubject!.subject.program.id,
+                                  session: selectedSubject!.subject.session.id,
+                                  semester:
+                                      selectedSubject!.subject.semester.id,
+                                  section: selectedSection!.id,
+                                  subject: selectedSubject!.subject.id,
+                                  subjectType: selectedSubjectType!,
+                                  creditHours: selectedCreditHour!,
+                                  date: selectedDate,
+                                  list: updatedStudent)
+                              .toJson());
+                      if (res['message'] == "success") {
+                        Navigator.pop(context);
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
+                    Navigator.pop(context);
+                  },
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -323,24 +408,86 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     child: const Center(
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 16),
-                            child: Text(
-                              "MARK ATTENDANCE",style: TextStyle(
-                                fontSize: 15.0,color: Colors.white
-                            ),
-                            ),
-                        )),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        child: Text(
+                          "MARK ATTENDANCE",
+                          style: TextStyle(fontSize: 15.0, color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 15),
-                const Text("Class Student List",style: TextStyle(fontSize: 25),),
+                const Text(
+                  "Class Student List",
+                  style: TextStyle(fontSize: 25),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Text('Select All'),
+                    Checkbox(
+                      value: selectAll,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          selectAll = value!;
+                          for (var student in students) {
+                            student.present = value;
+                          }
+                        });
+                      },
+                    ),
+                    const SizedBox(width: 64)
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    Text('Present'),
+                    SizedBox(width: 10),
+                    Text('Leave'),
+                    SizedBox(width: 20)
+                  ],
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: students.length,
+                  itemBuilder: (context, i) {
+                    return ListTile(
+                      title: Text(students[i].name!),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Checkbox(
+                            value: students[i].present,
+                            onChanged: students[i].leave
+                                ? null // Disable the checkbox when "leave" is checked
+                                : (bool? value) {
+                                    setState(() {
+                                      students[i].present = value!;
+                                    });
+                                  },
+                          ),
+                          Checkbox(
+                            value: students[i].leave,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                students[i].leave = value!;
 
-                ListView.builder(itemCount: 15,itemBuilder: (context, i){
-                  return ListTile();
-                })
-
-
+                                // If "leave" is checked, set "present" to false
+                                if (value) {
+                                  students[i].present = false;
+                                }
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                )
               ],
             ),
           ),

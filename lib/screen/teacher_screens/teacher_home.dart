@@ -17,7 +17,7 @@ class TeacherHome extends StatefulWidget {
 class _TeacherHomeState extends State<TeacherHome> {
   TeacherModel? teacherData;
   List<Subject>? subject = [];
-  int _selectedIndex = 0; // Currently selected drawer item index
+   // Currently selected drawer item index
 
   @override
   void initState() {
@@ -29,13 +29,6 @@ class _TeacherHomeState extends State<TeacherHome> {
     var data = await APIService().getOne("get-user");
     teacherData = TeacherModel.fromJson(data);
     setState(() {});
-  }
-
-  void _onDrawerItemTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    Navigator.pop(context); // Closes the drawer
   }
 
   @override
@@ -58,15 +51,12 @@ class _TeacherHomeState extends State<TeacherHome> {
                   style: const TextStyle(fontSize: 25, color: primaryColor),
                 ),
               ),
-              MyListTile(
-                onTap: () => _onDrawerItemTap(0),
-                selected: _selectedIndex == 0,
-                label: const Text('Home'),
-                Icon: const Icon(Icons.home),
+              const MyListTile(
+                label: Text('Home'),
+                Icon: Icon(Icons.home),
               ),
               MyListTile(
                   onTap: () {
-                    _onDrawerItemTap(1);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -74,24 +64,19 @@ class _TeacherHomeState extends State<TeacherHome> {
                       ),
                     );
                   },
-                  selected: _selectedIndex == 1,
                   label: const Text('Mark Attendance'),
                   Icon: const Icon(Icons.add_chart_outlined)),
-              MyListTile(
-                label: const Text('Attendance Records'),
-                Icon: const Icon(Icons.document_scanner),
-                onTap: () => _onDrawerItemTap(2),
-                selected: _selectedIndex == 2,
+              const MyListTile(
+                label: Text('Attendance Records'),
+                Icon: Icon(Icons.document_scanner),
               ),
-              MyListTile(
-                onTap: () => _onDrawerItemTap(3),
-                selected: _selectedIndex == 3,
-                label: const Text('Result Records'),
-                Icon: const Icon(Icons.auto_graph),
+              const MyListTile(
+
+                label: Text('Result Records'),
+                Icon: Icon(Icons.auto_graph),
               ),
               const Divider(height: 0),
               MyListTile(
-                selected: false,
                 label: const Text('Log Out'),
                 Icon: const Icon(Icons.logout),
                 onTap: () {

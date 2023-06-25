@@ -18,14 +18,6 @@ class StudentHome extends StatefulWidget {
 
 class _StudentHomeState extends State<StudentHome> {
   StudentModel? studentData;
-  int _selectedIndex = 0; // Currently selected drawer item index
-
-  void _onDrawerItemTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    Navigator.pop(context); // Closes the drawer
-  }
 
   @override
   void initState() {
@@ -62,50 +54,42 @@ class _StudentHomeState extends State<StudentHome> {
                             const TextStyle(fontSize: 25, color: primaryColor))
                     : const CircularProgressIndicator(),
               ),
-              MyListTile(
-                onTap: () => _onDrawerItemTap(0),
-                selected: _selectedIndex == 0,
+              const MyListTile(
                 label: Text('Home'),
                 Icon: Icon(Icons.home),
               ),
               MyListTile(
-                  selected: _selectedIndex == 1,
-                  label: Text('Attendance'),
-                  Icon: Icon(Icons.add_chart_outlined),
+                  label: const Text('Attendance'),
+                  Icon: const Icon(Icons.add_chart_outlined),
                   onTap: () {
-                    _onDrawerItemTap(1);
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Attendance()));
+                        MaterialPageRoute(builder: (context) => const Attendance()));
                   }),
               MyListTile(
-                selected: _selectedIndex == 2,
-                label: Text('Scanner'),
-                Icon: Icon(Icons.document_scanner),
+                label: const Text('Scanner'),
+                Icon: const Icon(Icons.document_scanner),
                 onTap: () {
-                  _onDrawerItemTap(2);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => QRViewExample(),
+                      builder: (context) => const QRViewExample(),
                     ),
                   );
                 },
               ),
-              MyListTile(
-                onTap: () => _onDrawerItemTap(3),
-                selected: _selectedIndex == 3,
+              const MyListTile(
+
+
                 label: Text('Progress'),
                 Icon: Icon(Icons.auto_graph),
               ),
-              MyListTile(
-                onTap: () => _onDrawerItemTap(4),
-                selected: _selectedIndex == 4,
+              const MyListTile(
+
                 label: Text('Result'),
                 Icon: Icon(Icons.newspaper),
               ),
               const Divider(height: 0),
               MyListTile(
-                selected: false,
                 label: const Text('Log Out'),
                 Icon: const Icon(Icons.logout),
                 onTap: () {

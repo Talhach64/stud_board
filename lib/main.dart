@@ -37,7 +37,7 @@ var user;
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: StudentList()
+      home: Login()
       // home: (id?.isNotEmpty ?? false) ? goTo() : const SplashScreen(),
     ),
   );
