@@ -15,24 +15,24 @@ void main() async {
   var directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   // final id = null;
-var user;
-  final id = await APIService().getPersonID();
-  try{
-     user = await APIService().getOne("get-user");
-  }catch(e){
+// var user;
+//   final id = await APIService().getPersonID();
+//   try{
+//      user = await APIService().getOne("get-user");
+//   }catch(e){
+//
+//
+//   }
 
-
-  }
-
-  goTo() {
-    if (user['role'] == "Student") {
-      return StudentHome();
-    } else if (user['role'] == "Teacher") {
-      return const TeacherHome();
-    } else if (user['role'] == "Admin") {
-      return const AdminHome();
-    }
-  }
+  // goTo() {
+  //   if (user['role'] == "Student") {
+  //     return StudentHome();
+  //   } else if (user['role'] == "Teacher") {
+  //     return const TeacherHome();
+  //   } else if (user['role'] == "Admin") {
+  //     return const AdminHome();
+  //   }
+  // }
 
   runApp(
     MaterialApp(
@@ -44,4 +44,3 @@ var user;
 }
 
 //0xFF7b2a23
-// Created Department , Program , Session , Semester, Subject, Student , Teacher screens

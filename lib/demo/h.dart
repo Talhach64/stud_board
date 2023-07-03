@@ -1,99 +1,285 @@
 import 'package:flutter/material.dart';
 
-class Student {
-  final String name;
-  bool isChecked1;
-  bool isChecked2;
-
-  Student(this.name, this.isChecked1, this.isChecked2);
-}
-
-class StudentList extends StatefulWidget {
-  @override
-  _StudentListState createState() => _StudentListState();
-}
-
-class _StudentListState extends State<StudentList> {
-  List<Student> students = [];
-  bool selectAll = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Populate the list with student names
-    for (int i = 1; i <= 10; i++) {
-      students.add(Student('Student $i', false, false));
-    }
-  }
+class DataTableExampleApp extends StatelessWidget {
+  const DataTableExampleApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Student List'),
-      ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text('Select All'),
-              Checkbox(
-                value: selectAll,
-                onChanged: (bool? value) {
-                  setState(() {
-                    selectAll = value!;
-                    for (var student in students) {
-                      student.isChecked1 = value;
-                    }
-                  });
-                },
-              ),
-              SizedBox(width: 64)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Text('Present'),
-              SizedBox(width: 10),
-              Text('Leave'),
-              SizedBox(width: 20)
-            ],
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: students.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(students[index].name),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Checkbox(
-                        value: students[index].isChecked1,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            students[index].isChecked1 = value!;
-                          });
-                        },
-                      ),
-                      Checkbox(
-                        value: students[index].isChecked2,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            students[index].isChecked2 = value!;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('DataTable Sample')),
+        body:  DataTableExample(),
       ),
     );
+  }
+}
+
+class DataTableExample extends StatelessWidget {
+  const DataTableExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return  SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: SingleChildScrollView(
+        child: DataTable(
+          columns: const <DataColumn>[
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'Department',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'Program',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'Session',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'Section',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'Semester',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'Subject - Code',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'Marked on',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+          ],
+          rows: const <DataRow>[
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('red')),
+                DataCell(Text('7')),
+                DataCell(Text('Compiler Construction - CS-411')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('red')),
+                DataCell(Text('7')),
+                DataCell(Text('Compiler Construction - CS-411')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('red')),
+                DataCell(Text('7')),
+                DataCell(Text('Compiler Construction - CS-411')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('red')),
+                DataCell(Text('7')),
+                DataCell(Text('Compiler Construction - CS-411')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('red')),
+                DataCell(Text('7')),
+                DataCell(Text('Compiler Construction - CS-411')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('blue')),
+                DataCell(Text('7')),
+                DataCell(Text('Java - CS-123')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('Computer Science')),
+                DataCell(Text('BSCS')),
+                DataCell(Text('2K19')),
+                DataCell(Text('red')),
+                DataCell(Text('7')),
+                DataCell(Text('Compiler Construction - CS-411')),
+                DataCell(Text('July 3, 2023 5:00 AM')),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+
   }
 }

@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:stud_board/api_models/login_model.dart';
+import 'package:stud_board/api_models/user_model.dart';
 import 'package:stud_board/api_services/api_services.dart';
+import 'package:stud_board/screen/parent_home.dart';
 import 'package:stud_board/screen/student_screens/student_home.dart';
 import 'package:stud_board/screen/register.dart';
 import 'package:stud_board/screen/teacher_screens/teacher_home.dart';
@@ -21,6 +23,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  UserModel? user;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -28,8 +31,8 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    // emailController.text = "khilji@nfciet.edu.pk";
-    // passwordController.text = "12345678";
+    emailController.text = "parent@test.com";
+    passwordController.text = "string123";
     super.initState();
   }
 
@@ -92,6 +95,7 @@ class _LoginState extends State<Login> {
                             builder: (context) {
                               return LoadingIcon(label: "Logging In...");
                             });
+
                         try {
                           var data = await APIService().post(
                               "login",
@@ -99,27 +103,30 @@ class _LoginState extends State<Login> {
                                       email: emailController.text,
                                       password: passwordController.text)
                                   .toJson());
-                          print(data['token']);
+
                           var token = data['token'];
                           await APIService().setToken(token);
                           var person = await APIService().getOne("get-user");
                           await APIService().setPersonID(person["_id"]);
                           Navigator.pop(context);
-                          if (person['role'] == "Student") {
+
+                          user = UserModel.fromJson(person);
+
+                          if (user!.role == "Student") {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => StudentHome()));
-                          } else if (person['role'] == "Teacher") {
+                          } else if (user!.role == "Teacher") {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const TeacherHome()));
-                          } else if (person['role'] == "Admin") {
+                          } else if (user!.role == "Parent") {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const AdminHome()));
+                                    builder: (context) => const ParentHome()));
                           }
                         } catch (e) {
                           print(e);
