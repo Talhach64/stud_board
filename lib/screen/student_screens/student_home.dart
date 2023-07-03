@@ -54,9 +54,12 @@ class _StudentHomeState extends State<StudentHome> {
                             const TextStyle(fontSize: 25, color: primaryColor))
                     : const CircularProgressIndicator(),
               ),
-              const MyListTile(
+               MyListTile(
                 label: Text('Home'),
                 Icon: Icon(Icons.home),
+                onTap: (){
+                  Navigator.pop(context);
+                },
               ),
               MyListTile(
                   label: const Text('Attendance'),
@@ -77,17 +80,17 @@ class _StudentHomeState extends State<StudentHome> {
                   );
                 },
               ),
-              const MyListTile(
-
-
-                label: Text('Progress'),
-                Icon: Icon(Icons.auto_graph),
-              ),
-              const MyListTile(
-
-                label: Text('Result'),
-                Icon: Icon(Icons.newspaper),
-              ),
+              // const MyListTile(
+              //
+              //
+              //   label: Text('Progress'),
+              //   Icon: Icon(Icons.auto_graph),
+              // ),
+              // const MyListTile(
+              //
+              //   label: Text('Result'),
+              //   Icon: Icon(Icons.newspaper),
+              // ),
               const Divider(height: 0),
               MyListTile(
                 label: const Text('Log Out'),
@@ -111,7 +114,7 @@ class _StudentHomeState extends State<StudentHome> {
         ),
         body: const Center(
           child: Text(
-            "DashBoard",
+            "Progress",
             style: TextStyle(fontSize: 30),
           ),
         ),

@@ -19,6 +19,7 @@ class _RegisterParentState extends State<RegisterParent> {
   TextEditingController phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
+  bool obscure = true;
 
   @override
   void dispose() {
@@ -64,12 +65,54 @@ class _RegisterParentState extends State<RegisterParent> {
                       hint: 'Email',
                       controller: emailController,
                       validator: (String? value) =>
-                          value!.isEmpty ? "Invalid Email or Password" : null),
-                  MyPassField(
-                    label: 'Password',
-                    hint: 'Password',
-                    controller: passwordController,
-                    keyboard: TextInputType.text,
+                          value!.isEmpty ? "Invalid Email" : null),
+                  Padding(
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
+                    child: TextFormField(
+                      obscureText: obscure,
+                      autovalidateMode:
+                      AutovalidateMode.onUserInteraction,
+                      controller: passwordController,
+                      keyboardType: TextInputType.text,
+                      validator: (String? value) =>
+                      value!.isEmpty || value.length < 8
+                          ? "Password must be at-least 8 characters"
+                          : null,
+                      decoration: InputDecoration(
+                        labelStyle:
+                        const TextStyle(color: primaryColor),
+                        hintText: "Password",
+                        labelText: "Password",
+                        suffixIcon: GestureDetector(
+                          onTap: () =>
+                              setState(() => obscure = !obscure),
+                          child: obscure
+                              ? const Icon(
+                            Icons.visibility,
+                            color: primaryColor,
+                          )
+                              : const Icon(Icons.visibility_off,
+                              color: primaryColor),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: primaryColor),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide:
+                          const BorderSide(color: primaryColor),
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: primaryColor),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide:
+                          const BorderSide(color: primaryColor),
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 20.0),
                   ElevatedButton(

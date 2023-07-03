@@ -28,7 +28,7 @@ class Register extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: GestureDetector(
 
-                onTap: ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=> RegisterStudent())),
+                onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (ctx)=> RegisterStudent())),
 
                 child: Container(
                   width: double.infinity,
@@ -55,7 +55,7 @@ class Register extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: GestureDetector(
-               onTap: ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=>const RegisterParent())),
+               onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (ctx)=>const RegisterParent())),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -81,31 +81,28 @@ class Register extends StatelessWidget {
 
               GestureDetector(
                 onTap: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Login()));
+                  Navigator.pop(context);
                 },
                 child: Text(
                   'Sign In Instead?',
                   style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:  primaryColor,
-                  fixedSize: const Size(100, 40),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-                child: const Text(
-                  'SIGN IN',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                ),
-              ),
+              // SizedBox(height: 20.0),
+              // ElevatedButton(
+              //   onPressed: () {},
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor:  primaryColor,
+              //     fixedSize: const Size(100, 40),
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(8.0),
+              //     ),
+              //   ),
+              //   child: const Text(
+              //     'SIGN IN',
+              //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              //   ),
+              // ),
             ],
           ),
         ),

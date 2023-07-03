@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stud_board/api_models/teacher_models.dart';
 import 'package:stud_board/api_services/api_services.dart';
 import 'package:stud_board/screen/login.dart';
+import 'package:stud_board/screen/teacher_screens/attendance_records.dart';
 import 'package:stud_board/widget/list_tile.dart';
 
 import '../../constant/constant.dart';
@@ -51,9 +52,12 @@ class _TeacherHomeState extends State<TeacherHome> {
                   style: const TextStyle(fontSize: 25, color: primaryColor),
                 ),
               ),
-              const MyListTile(
+               MyListTile(
                 label: Text('Home'),
                 Icon: Icon(Icons.home),
+                onTap: (){
+                  Navigator.pop(context);
+                },
               ),
               MyListTile(
                   onTap: () {
@@ -66,15 +70,21 @@ class _TeacherHomeState extends State<TeacherHome> {
                   },
                   label: const Text('Mark Attendance'),
                   Icon: const Icon(Icons.add_chart_outlined)),
-              const MyListTile(
+               MyListTile(
                 label: Text('Attendance Records'),
                 Icon: Icon(Icons.document_scanner),
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                      builder: (context) =>  const AttendanceRecords()));
+                },
               ),
-              const MyListTile(
-
-                label: Text('Result Records'),
-                Icon: Icon(Icons.auto_graph),
-              ),
+              // const MyListTile(
+              //
+              //   label: Text('Result Records'),
+              //   Icon: Icon(Icons.auto_graph),
+              // ),
               const Divider(height: 0),
               MyListTile(
                 label: const Text('Log Out'),
