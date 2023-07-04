@@ -62,3 +62,15 @@ Map<String, dynamic> _$RegisterStudentModelToJson(
       'password': instance.password,
       'gender': instance.gender,
     };
+
+SearchStudent _$SearchStudentFromJson(Map<String, dynamic> json) =>
+    SearchStudent(
+      query: json['query'] as String,
+      type: json['type'] as String,
+    );
+
+Map<String, dynamic> _$SearchStudentToJson(SearchStudent instance) =>
+    <String, dynamic>{
+      'query': instance.query,
+      'type': instance.type,
+    };

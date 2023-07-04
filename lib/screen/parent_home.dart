@@ -28,14 +28,50 @@ class _ParentHomeState extends State<ParentHome> {
     fetch();
     super.initState();
   }
+
+  Future<List<dynamic>?> _fetchStudents() async {
+    try {
+      final response = await Dio().post(
+        'https://nfc-master-api.onrender.com/api/students/search',
+        data: SearchStudent(
+            query: "talha",
+            type: "name")
+            .toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${await APIService().getToken()}',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        ),
+      );
+      print('///////////////////////////////');
+
+      print(response.data);
+
+      print('///////////////////////////////');
+      List<dynamic> data = response.data;
+
+      print('///////////////////////////////');
+      print(data);
+
+      setState(() {});
+    } catch (error) {
+      print(error);
+      return null;
+    }
+    return null;
+  }
 //have to start from here get the students b name but not working through model so have to Continue from model json
   Future<void> search() async {
     var data = await APIService().post("students/search", {
       "query": "talha",
       "type": "name"
     });
-    student = StudentModel.fromJson(data);
-    print(student);
+    print('///////////////////////////////');
+    print(data);
+    print('///////////////////////////////');
+    // student = StudentModel.fromJson(data);
+    // print(student);
     setState(() {});
   }
 
@@ -170,7 +206,7 @@ class _ParentHomeState extends State<ParentHome> {
                     const SizedBox(height: 7),
                     const Text('Enter the name of the student',style: TextStyle(fontSize: 20.0),),
                     IconButton(onPressed: (){
-                      search();
+                      _fetchStudents();
                     }, icon: const Icon(Icons.search),),
                     ListView.builder(
                       shrinkWrap: true,

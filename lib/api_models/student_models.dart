@@ -67,3 +67,18 @@ class RegisterStudentModel {
 
   Map<String, dynamic> toJson() => _$RegisterStudentModelToJson(this);
 }
+
+
+@JsonSerializable(explicitToJson: true)
+class SearchStudent {
+
+  String query;
+  String type;
+
+  SearchStudent({required this.query, required this.type});
+
+  factory SearchStudent.fromJson(Map<String, dynamic> json) =>
+      _$SearchStudentFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SearchStudentToJson(this);
+}
