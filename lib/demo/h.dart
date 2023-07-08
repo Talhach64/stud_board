@@ -82,6 +82,8 @@ class DataTableExample extends StatelessWidget {
             ),
           ],
           rows: const <DataRow>[
+
+
             DataRow(
               cells: <DataCell>[
                 DataCell(Text('Computer Science')),

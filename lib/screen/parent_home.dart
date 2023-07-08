@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:stud_board/api_models/student_models.dart';
 import 'package:stud_board/api_models/user_model.dart';
+import 'package:stud_board/screen/parent_searched.dart';
 import 'package:stud_board/widget/text_widget.dart';
 
 import '../api_services/api_services.dart';
@@ -18,10 +19,10 @@ class ParentHome extends StatefulWidget {
 
 class _ParentHomeState extends State<ParentHome> {
   UserModel? user;
-  StudentModel? student;
+  List<StudentModel> student = [];
   TextEditingController searchController = TextEditingController();
-  List<String> searchType = ["By Name", "By RollNo"];
-  String? selectedSearchType;
+  List<String> searchType = ["name", "rollNo"];
+  String selectedSearchType = 'name';
 
   @override
   void initState() {
@@ -29,49 +30,15 @@ class _ParentHomeState extends State<ParentHome> {
     super.initState();
   }
 
-  Future<List<dynamic>?> _fetchStudents() async {
-    try {
-      final response = await Dio().post(
-        'https://nfc-master-api.onrender.com/api/students/search',
-        data: SearchStudent(
-            query: "talha",
-            type: "name")
-            .toJson(),
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer ${await APIService().getToken()}',
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-        ),
-      );
-      print('///////////////////////////////');
-
-      print(response.data);
-
-      print('///////////////////////////////');
-      List<dynamic> data = response.data;
-
-      print('///////////////////////////////');
-      print(data);
-
-      setState(() {});
-    } catch (error) {
-      print(error);
-      return null;
-    }
-    return null;
-  }
-//have to start from here get the students b name but not working through model so have to Continue from model json
   Future<void> search() async {
-    var data = await APIService().post("students/search", {
-      "query": "talha",
-      "type": "name"
-    });
-    print('///////////////////////////////');
-    print(data);
-    print('///////////////////////////////');
-    // student = StudentModel.fromJson(data);
-    // print(student);
+    List<dynamic> data = await APIService().post(
+        "students/search",
+        SearchStudent(query: searchController.text, type: selectedSearchType!)
+            .toJson());
+    student = [];
+    student = (data).map((e) => StudentModel.fromJson(e)).toList();
+    setState(() {});
+
     setState(() {});
   }
 
@@ -138,8 +105,8 @@ class _ParentHomeState extends State<ParentHome> {
                 child: Column(
                   children: [
                     Container(
-                      padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5.0),
                           border: Border.all(width: 1)),
@@ -171,7 +138,7 @@ class _ParentHomeState extends State<ParentHome> {
                           onChanged: (var newValue) {
                             selectedSearchType = newValue!;
                             setState(
-                                  () {},
+                              () {},
                             );
                           },
                         ),
@@ -204,21 +171,68 @@ class _ParentHomeState extends State<ParentHome> {
                       ),
                     ),
                     const SizedBox(height: 7),
-                    const Text('Enter the name of the student',style: TextStyle(fontSize: 20.0),),
-                    IconButton(onPressed: (){
-                      _fetchStudents();
-                    }, icon: const Icon(Icons.search),),
-                    ListView.builder(
-                      shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 3,
-                        itemBuilder: (ctx,i){
-                      return const ListTile(
-                        title: Text("Talha"),
-                        subtitle: Text('340'),
-                      );
-                    })
+                    const Text(
+                      'Enter the name of the student',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            print(selectedSearchType);
+                            print(searchController.text);
 
+                            search();
+                            setState(() {});
+                          },
+                          child: const Text("search"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            student = [];
+                            setState(() {});
+                          },
+                          child: const Text("clear"),
+                        )
+                      ],
+                    ),
+                    ...student.map((e) => student == []
+                        ? const Text(
+                            "Could not find student by that Name or rollno")
+                        : ListTile(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          ElevatedButton(onPressed: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) =>  ParentSearched(id: e.id,)));
+                                          }, child: const Text('See Student Attendance')),
+                                          // ElevatedButton(onPressed: (){}, child: const Text('See Student Result'))
+                                        ],
+                                      ),
+                                    );
+                                  });
+
+                            },
+                            title: Text(e.name),
+                            subtitle: Text(e.rollNo),
+                          )),
+
+                    // ListView.builder(
+                    //   shrinkWrap: true,
+                    //     physics: const NeverScrollableScrollPhysics(),
+                    //     itemCount: student.length,
+                    //     itemBuilder: (ctx,i){
+                    //   return  ListTile(
+                    //     title: Text(student[i].name),
+                    //     subtitle: Text(student[i].rollNo),
+                    //   );
+                    // })
                   ],
                 ),
               ),

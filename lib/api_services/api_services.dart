@@ -110,8 +110,14 @@ class APIService {
         },
       ),
     );
-    print(res.data);
+
+
+    print(res);
+
+
     switch (res.statusCode) {
+      case 200:
+        return res.data;
       case 202:
         return res.data;
       case 401:

@@ -41,6 +41,22 @@ Map<String, dynamic> _$SubjectToJson(Subject instance) => <String, dynamic>{
       '_id': instance.id,
     };
 
+SubjectForSheet _$SubjectForSheetFromJson(Map<String, dynamic> json) =>
+    SubjectForSheet(
+      subject: json['subject'] as String,
+      lab_hours: json['lab_hours'] as String,
+      theory_hours: json['theory_hours'] as String,
+      id: json['_id'] as String,
+    );
+
+Map<String, dynamic> _$SubjectForSheetToJson(SubjectForSheet instance) =>
+    <String, dynamic>{
+      'subject': instance.subject,
+      'lab_hours': instance.lab_hours,
+      'theory_hours': instance.theory_hours,
+      '_id': instance.id,
+    };
+
 SubjectDetails _$SubjectDetailsFromJson(Map<String, dynamic> json) =>
     SubjectDetails(
       id: json['_id'] as String,
@@ -129,12 +145,12 @@ Session _$SessionFromJson(Map<String, dynamic> json) => Session(
 
 Map<String, dynamic> _$SessionToJson(Session instance) => <String, dynamic>{
       '_id': instance.id,
-      'session_title': instance.session_title,
       'department': instance.department,
       'program': instance.program,
       'type': instance.type,
       'ending_year': instance.ending_year,
       'starting_year': instance.starting_year,
+      'session_title': instance.session_title,
     };
 
 Semester _$SemesterFromJson(Map<String, dynamic> json) => Semester(

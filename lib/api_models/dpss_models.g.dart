@@ -58,12 +58,18 @@ SectionsModel _$SectionsModelFromJson(Map<String, dynamic> json) =>
     SectionsModel(
       id: json['_id'] as String?,
       sectionTitle: json['section_title'] as String,
+      department: json['department'] as String,
+      program: json['program'] as String,
+      session: json['session'] as String,
     );
 
 Map<String, dynamic> _$SectionsModelToJson(SectionsModel instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'section_title': instance.sectionTitle,
+      'department': instance.department,
+      'program': instance.program,
+      'session': instance.session,
     };
 
 SessionsModel _$SessionsModelFromJson(Map<String, dynamic> json) =>

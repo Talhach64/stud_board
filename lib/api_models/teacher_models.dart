@@ -52,6 +52,27 @@ class Subject {
 }
 
 @JsonSerializable(explicitToJson: true)
+class SubjectForSheet {
+  String subject;
+  String lab_hours;
+  String theory_hours;
+  @JsonKey(name: '_id')
+  String id;
+
+  SubjectForSheet({
+    required this.subject,
+    required this.lab_hours,
+    required this.theory_hours,
+    required this.id,
+  });
+
+  factory SubjectForSheet.fromJson(Map<String, dynamic> json) =>
+      _$SubjectForSheetFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SubjectForSheetToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class SubjectDetails {
   @JsonKey(name: '_id')
   String id;
@@ -156,12 +177,12 @@ class Program {
 class Session {
   @JsonKey(name: '_id')
   String id;
-  String session_title;
   String department;
   String program;
   String type;
   String ending_year;
   String starting_year;
+  String session_title;
 
   Session({
     required this.id,
