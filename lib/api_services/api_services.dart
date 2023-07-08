@@ -133,7 +133,7 @@ class APIService {
 
   Future<void> put(String route, Map<String, dynamic> data) async {
     try {
-      await _dio.put(
+      Response res = await _dio.put(
         "$apiUrl/$route",
         data: data,
         options: Options(
@@ -143,6 +143,22 @@ class APIService {
           },
         ),
       );
+      print(res.statusMessage);
+      print(res.statusCode);
+      switch (res.statusCode) {
+        case 200:
+          return res.data;
+        case 202:
+          return res.data;
+        case 401:
+          throw Exception('Unauthorized');
+        case 404:
+          throw Exception('Not found');
+        case 500:
+          throw Exception('Internal server error');
+        default:
+          throw Exception('An unexpected error occurred');
+      }
     } catch (error) {
       print(error);
     }
