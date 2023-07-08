@@ -125,18 +125,29 @@ class _AttendanceRecordsState extends State<AttendanceRecords> {
                               (e) => DataRow(
                                 cells: <DataCell>[
                                   DataCell(Text(e.department.department_name),
-                                      onTap: () {}),
+                                      onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) =>  UpdateAttendance(id: e.id,)));}),
                                   DataCell(
-                                      Text(e.program.program_abbreviation)),
-                                  DataCell(Text(e.session.session_title)),
+                                      Text(e.program.program_abbreviation), onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  UpdateAttendance(id: e.id,)));
+                                  }),
+                                  DataCell(Text(e.session.session_title), onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  UpdateAttendance(id: e.id,)));
+                                  }),
                                   DataCell(Text(e.section.sectionTitle), onTap: (){
                                     Navigator.push(context, MaterialPageRoute(builder: (context) =>  UpdateAttendance(id: e.id,)));
                                   }),
-                                  DataCell(Text(e.semester.semester_title)),
+                                  DataCell(Text(e.semester.semester_title), onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  UpdateAttendance(id: e.id,)));
+                                  }),
                                   DataCell(Text(
-                                      "${e.subject.subjectTitle} - ${e.subject.subjectCode}")),
-                                  DataCell(Text(formatDate(e.date))),
+                                      "${e.subject.subjectTitle} - ${e.subject.subjectCode}"), onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  UpdateAttendance(id: e.id,)));
+                                  }),
+                                  DataCell(Text(formatDate(e.date)), onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  UpdateAttendance(id: e.id,)));
+                                  }),
                                 ],
+
                               ),
                             ),
                           ],

@@ -164,6 +164,27 @@ class _UpdateAttendanceState extends State<UpdateAttendance> {
                         builder: (context) {
                           return LoadingIcon(label: "Almost Done");
                         });
+
+                    print(widget.id);
+                    print(attendanceSheet!.sheet.id);
+                    print(attendanceSheet!.sheet.teacher.id);
+                    print(attendanceSheet!.sheet.department.id);
+                    print(attendanceSheet!.sheet.program.id);
+                    print(attendanceSheet!.sheet.session.id);
+                    print(attendanceSheet!.sheet.semester.id);
+                    print(attendanceSheet!.sheet.section.id);
+                    print(attendanceSheet!.sheet.subject.id);
+                    print(attendanceSheet!.sheet.subject.type);
+                    print(attendanceSheet!.sheet.creditHours);
+                    print(dateTime);
+                    print(updatedStudent[0].student);
+                    print(updatedStudent[0].present);
+                    print(updatedStudent[1].student);
+                    print(updatedStudent[1].present);
+                    print(updatedStudent[2].student);
+                    print(updatedStudent[2].present);
+
+
                     //update ni ho rhi attendance , print kr kay dekho, debug kr kay every status and data
                     try {
                       var res = await APIService().put(
@@ -177,8 +198,8 @@ class _UpdateAttendanceState extends State<UpdateAttendance> {
                               semester: attendanceSheet!.sheet.semester.id,
                               section:  attendanceSheet!.sheet.section.id,
                               subject:  attendanceSheet!.sheet.subject.id,
-                              subjectType:  attendanceSheet!.sheet.subject.type,
-                              creditHours:  attendanceSheet!.sheet.creditHours,
+                              // subjectType:  attendanceSheet!.sheet.subject.type,
+                              // creditHours:  attendanceSheet!.sheet.creditHours,
                               date:  dateTime,
                               list: updatedStudent)
                               .toJson());
@@ -222,7 +243,7 @@ class _UpdateAttendanceState extends State<UpdateAttendance> {
                       onChanged: (bool? value) {
                         setState(() {
                           selectAll = value!;
-                          for (var student in students) {
+                          for (var student in list) {
                             student.present = value;
                           }
                         });

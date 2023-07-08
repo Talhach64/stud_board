@@ -143,6 +143,9 @@ class APIService {
           },
         ),
       );
+
+      print("buahaha");
+      print(res.data);
       print(res.statusMessage);
       print(res.statusCode);
       switch (res.statusCode) {

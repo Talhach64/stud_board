@@ -54,10 +54,10 @@ class _StudentHomeState extends State<StudentHome> {
                             const TextStyle(fontSize: 25, color: primaryColor))
                     : const CircularProgressIndicator(),
               ),
-               MyListTile(
-                label: Text('Home'),
-                Icon: Icon(Icons.home),
-                onTap: (){
+              MyListTile(
+                label: const Text('Home'),
+                Icon: const Icon(Icons.home),
+                onTap: () {
                   Navigator.pop(context);
                 },
               ),
@@ -65,8 +65,10 @@ class _StudentHomeState extends State<StudentHome> {
                   label: const Text('Attendance'),
                   Icon: const Icon(Icons.add_chart_outlined),
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Attendance()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Attendance()));
                   }),
               MyListTile(
                 label: const Text('Scanner'),
@@ -99,7 +101,7 @@ class _StudentHomeState extends State<StudentHome> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Login(),
+                      builder: (context) => const Login(),
                     ),
                   );
                   APIService().deleteID("_id");
@@ -112,13 +114,43 @@ class _StudentHomeState extends State<StudentHome> {
           title: const Text('NFC IET STUDENT PORTAL'),
           backgroundColor: primaryColor,
         ),
-        body: const Center(
-          child: Text(
-            "Progress",
-            style: TextStyle(fontSize: 30),
+        body: Center(
+          child:Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(onTap: (){Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Attendance()));},
+                  child: Card(color: primaryColor, child: Container(height: 150,width: double.infinity,decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0),),child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [Icon(Icons.add_chart_outlined,size: 70,color: Colors.white,),Text('See Attendance',style: TextStyle(fontSize: 30,color: Colors.white),)],
+                  ),
+                  ),
+                  ),
+                ),
+                const SizedBox(height: 50),
+                GestureDetector(onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const QRViewExample(),
+                    ),
+                  );
+                },
+                  child: Card(color: primaryColor, child: Container(height: 150,width: double.infinity,decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0),),child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [Icon(Icons.document_scanner,size: 70,color: Colors.white,),Text('Scan for Attendance',style: TextStyle(fontSize: 30,color: Colors.white),)],
+                  ),
+                  ),
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-
+        )
       ),
     );
   }

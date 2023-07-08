@@ -31,8 +31,8 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    emailController.text = "khilji@nfciet.edu.pk";
-    passwordController.text = "12345678";
+    emailController.text = "2k19bscs340@undergrad.nfciet.edu.pk";
+    passwordController.text = "admin123";
     super.initState();
   }
 
