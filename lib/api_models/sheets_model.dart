@@ -12,7 +12,7 @@ class SheetsModel {
   Department department;
   Program program;
   Session session;
-  SectionsModel section;
+  Sections section;
   Semester semester;
   SubjectSheet subject;
   String subjectType;
@@ -190,6 +190,31 @@ class SubjectForSheet {
       _$SubjectForSheetFromJson(json);
 
   Map<String, dynamic> toJson() => _$SubjectForSheetToJson(this);
+}
+
+
+@JsonSerializable(explicitToJson: true)
+class Sections {
+  @JsonKey(name: '_id')
+  String? id;
+  @JsonKey(name: 'section_title')
+  String sectionTitle;
+  String? department;
+  String? program;
+  String? session;
+  Sections({
+    required this.id,
+    required this.sectionTitle,
+    this.department,
+    this.program,
+    this.session,
+
+  });
+
+  factory Sections.fromJson(Map<String, dynamic> json) =>
+      _$SectionsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SectionsToJson(this);
 }
 @JsonSerializable(explicitToJson: true)
 class StudentSheets {

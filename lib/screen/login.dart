@@ -13,10 +13,10 @@ import 'package:stud_board/widget/loading_icon.dart';
 import 'package:stud_board/widget/text_widget.dart';
 import '../constant/constant.dart';
 import '../widget/pass_widget.dart';
-import 'admin_screens/admin_home.dart';
+
 
 class Login extends StatefulWidget {
-  Login({Key? key}) : super(key: key);
+  const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -56,7 +56,7 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: [
                   const SizedBox(height: 5.0),
-                  Img(),
+                  const Img(),
                   const Text(
                     'Sign In',
                     style: TextStyle(fontSize: 35),
@@ -129,7 +129,6 @@ class _LoginState extends State<Login> {
                                     builder: (context) => const ParentHome()));
                           }
                         } catch (e) {
-                          print(e);
                           Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

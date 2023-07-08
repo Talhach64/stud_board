@@ -71,15 +71,10 @@ class SectionsModel {
   String? id;
   @JsonKey(name: 'section_title')
   String sectionTitle;
-  String department;
-  String program;
-  String session;
+
   SectionsModel({
     required this.id,
     required this.sectionTitle,
-    required this.department,
-    required this.program,
-    required this.session,
 
   });
 
