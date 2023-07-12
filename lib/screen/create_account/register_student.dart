@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:stud_board/api_models/dpss_models.dart';
-import 'package:stud_board/api_models/student_models.dart';
-import 'package:stud_board/api_services/api_services.dart';
-import 'package:stud_board/screen/login.dart';
-import 'package:stud_board/widget/img.dart';
-import 'package:stud_board/widget/text_widget.dart';
+import 'package:student_board/api_models/dpss_models.dart';
+import 'package:student_board/api_models/student_models.dart';
+import 'package:student_board/api_services/api_services.dart';
+import 'package:student_board/screen/login.dart';
+import 'package:student_board/widget/img.dart';
+import 'package:student_board/widget/text_widget.dart';
 import '../../constant/constant.dart';
 import '../../widget/loading_icon.dart';
 

@@ -1,4 +1,4 @@
-# stud_board
+# student_board
 
 A new Flutter project.
 

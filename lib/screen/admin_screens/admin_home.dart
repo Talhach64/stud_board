@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:stud_board/api_services/api_services.dart';
-import 'package:stud_board/screen/admin_screens/register_department.dart';
-import 'package:stud_board/screen/admin_screens/register_program.dart';
-import 'package:stud_board/screen/admin_screens/register_semester.dart';
-import 'package:stud_board/screen/admin_screens/register_session.dart';
-import 'package:stud_board/screen/admin_screens/register_student_in_subject.dart';
-import 'package:stud_board/screen/admin_screens/register_subject.dart';
-import 'package:stud_board/screen/admin_screens/register_teacher_in_subject.dart';
-import 'package:stud_board/screen/login.dart';
-import 'package:stud_board/widget/list_tile.dart';
+import 'package:student_board/api_services/api_services.dart';
+import 'package:student_board/screen/admin_screens/register_department.dart';
+import 'package:student_board/screen/admin_screens/register_program.dart';
+import 'package:student_board/screen/admin_screens/register_semester.dart';
+import 'package:student_board/screen/admin_screens/register_session.dart';
+import 'package:student_board/screen/admin_screens/register_student_in_subject.dart';
+import 'package:student_board/screen/admin_screens/register_subject.dart';
+import 'package:student_board/screen/admin_screens/register_teacher_in_subject.dart';
+import 'package:student_board/screen/login.dart';
+import 'package:student_board/widget/list_tile.dart';
 
 import '../../constant/constant.dart';
 

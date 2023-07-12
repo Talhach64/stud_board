@@ -4,8 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:stud_board/api_services/api_services.dart';
-import 'package:stud_board/constant/constant.dart';
+import 'package:student_board/api_services/api_services.dart';
+import 'package:student_board/constant/constant.dart';
 
 class QRViewExample extends StatefulWidget {
   const QRViewExample({Key? key}) : super(key: key);

@@ -131,9 +131,9 @@ class APIService {
     }
   }
 
-  Future<void> put(String route, Map<String, dynamic> data) async {
+  Future<void> patch(String route, Map<String, dynamic> data) async {
     try {
-      Response res = await _dio.put(
+      Response res = await _dio.patch(
         "$apiUrl/$route",
         data: data,
         options: Options(
@@ -144,10 +144,12 @@ class APIService {
         ),
       );
 
-      print("buahaha");
+
       print(res.data);
       print(res.statusMessage);
       print(res.statusCode);
+
+
       switch (res.statusCode) {
         case 200:
           return res.data;

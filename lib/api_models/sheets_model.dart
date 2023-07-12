@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:stud_board/api_models/dpss_models.dart';
-import 'package:stud_board/api_models/teacher_models.dart';
+import 'package:student_board/api_models/dpss_models.dart';
+import 'package:student_board/api_models/teacher_models.dart';
 
 part 'sheets_model.g.dart';
 

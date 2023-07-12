@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stud_board/widget/loading_icon.dart';
-import 'package:stud_board/widget/text_widget.dart';
+import 'package:student_board/widget/loading_icon.dart';
+import 'package:student_board/widget/text_widget.dart';
 import '../../constant/constant.dart';
 import '../../widget/img.dart';
 import '../../widget/pass_widget.dart';

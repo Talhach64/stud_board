@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stud_board/widget/text_widget.dart';
+import 'package:student_board/widget/text_widget.dart';
 
 import '../../constant/constant.dart';
 

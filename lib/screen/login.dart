@@ -1,16 +1,16 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:stud_board/api_models/login_model.dart';
-import 'package:stud_board/api_models/user_model.dart';
-import 'package:stud_board/api_services/api_services.dart';
-import 'package:stud_board/screen/parent_home.dart';
-import 'package:stud_board/screen/student_screens/student_home.dart';
-import 'package:stud_board/screen/register.dart';
-import 'package:stud_board/screen/teacher_screens/teacher_home.dart';
-import 'package:stud_board/widget/img.dart';
-import 'package:stud_board/widget/loading_icon.dart';
-import 'package:stud_board/widget/text_widget.dart';
+import 'package:student_board/api_models/login_model.dart';
+import 'package:student_board/api_models/user_model.dart';
+import 'package:student_board/api_services/api_services.dart';
+import 'package:student_board/screen/parent_home.dart';
+import 'package:student_board/screen/student_screens/student_home.dart';
+import 'package:student_board/screen/register.dart';
+import 'package:student_board/screen/teacher_screens/teacher_home.dart';
+import 'package:student_board/widget/img.dart';
+import 'package:student_board/widget/loading_icon.dart';
+import 'package:student_board/widget/text_widget.dart';
 import '../constant/constant.dart';
 import '../widget/pass_widget.dart';
 
@@ -31,8 +31,8 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    emailController.text = "2k19bscs340@undergrad.nfciet.edu.pk";
-    passwordController.text = "admin123";
+    emailController.text = "khilji@nfciet.edu.pk";
+    passwordController.text = "12345678";
     super.initState();
   }
 

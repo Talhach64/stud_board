@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:stud_board/screen/teacher_screens/update_attendance.dart';
+import 'package:student_board/screen/teacher_screens/update_attendance.dart';
 import '../../api_models/sheets_model.dart';
 import '../../api_services/api_services.dart';
 import '../../constant/constant.dart';

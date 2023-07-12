@@ -1,6 +1,6 @@
 {
-    "name": "stud_board",
-    "short_name": "stud_board",
+    "name": "student_board",
+    "short_name": "student_board",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

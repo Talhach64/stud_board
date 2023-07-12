@@ -7,7 +7,7 @@ class Img extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Image(height: 200,
       width: 200,
-      image: AssetImage("images/nfc_logo.jpg"),
+      image: AssetImage("images/nfc_logoo.png"),
 
     );
   }

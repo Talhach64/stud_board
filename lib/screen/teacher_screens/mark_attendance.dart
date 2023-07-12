@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:stud_board/api_models/teacher_models.dart';
+import 'package:student_board/api_models/teacher_models.dart';
 import '../../api_models/attendance_models.dart';
 import '../../api_models/dpss_models.dart';
 import '../../api_services/api_services.dart';
@@ -365,7 +365,6 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                     updatedStudent = students.map((e) {
                       return AttendanceStudent(
                         student: e.id,
-                        // Assign the name property from AttendanceStudentDataModel
                         present: e.present,
                         leave: e.leave,
                       );
@@ -380,12 +379,10 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                           "attendance/student",
                           AttendanceStudentsModel(
                                   teacher: teacherData!.id,
-                                  department:
-                                      selectedSubject!.subject.department.id,
+                                  department: selectedSubject!.subject.department.id,
                                   program: selectedSubject!.subject.program.id,
                                   session: selectedSubject!.subject.session.id,
-                                  semester:
-                                      selectedSubject!.subject.semester.id,
+                                  semester: selectedSubject!.subject.semester.id,
                                   section: selectedSection!.id,
                                   subject: selectedSubject!.subject.id,
                                   subjectType: selectedSubjectType!,

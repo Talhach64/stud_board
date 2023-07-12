@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stud_board/constant/constant.dart';
+import 'package:student_board/constant/constant.dart';
 
 class MyListTile extends StatelessWidget {
   final Widget Icon;

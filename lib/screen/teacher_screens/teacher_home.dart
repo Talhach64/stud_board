@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:stud_board/api_models/teacher_models.dart';
-import 'package:stud_board/api_services/api_services.dart';
-import 'package:stud_board/screen/login.dart';
-import 'package:stud_board/screen/teacher_screens/attendance_records.dart';
-import 'package:stud_board/widget/list_tile.dart';
+import 'package:student_board/api_models/teacher_models.dart';
+import 'package:student_board/api_services/api_services.dart';
+import 'package:student_board/screen/login.dart';
+import 'package:student_board/screen/teacher_screens/attendance_records.dart';
+import 'package:student_board/widget/list_tile.dart';
 
 import '../../constant/constant.dart';
 import 'mark_attendance.dart';

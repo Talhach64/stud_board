@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:stud_board/api_models/student_models.dart';
-import 'package:stud_board/api_models/user_model.dart';
-import 'package:stud_board/screen/parent_searched.dart';
-import 'package:stud_board/widget/text_widget.dart';
+import 'package:student_board/api_models/student_models.dart';
+import 'package:student_board/api_models/user_model.dart';
+import 'package:student_board/screen/parent_searched.dart';
+import 'package:student_board/widget/text_widget.dart';
 
 import '../api_services/api_services.dart';
 import '../constant/constant.dart';

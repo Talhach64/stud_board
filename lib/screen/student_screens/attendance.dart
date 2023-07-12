@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:stud_board/api_services/api_services.dart';
+import 'package:student_board/api_services/api_services.dart';
 import 'package:intl/intl.dart';
-import 'package:stud_board/constant/constant.dart';
+import 'package:student_board/constant/constant.dart';
 
 class Attendance extends StatefulWidget {
   const Attendance({Key? key}) : super(key: key);

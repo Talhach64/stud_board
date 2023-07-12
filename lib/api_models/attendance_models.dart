@@ -36,7 +36,7 @@ class AttendanceStudentsModel {
   String subject;
   String? subjectType;
   String? creditHours;
-  DateTime date;
+  DateTime? date;
   List<AttendanceStudent> list;
 
   AttendanceStudentsModel({
@@ -49,7 +49,7 @@ class AttendanceStudentsModel {
     required this.subject,
      this.subjectType,
      this.creditHours,
-    required this.date,
+     this.date,
      required this.list,
   });
 

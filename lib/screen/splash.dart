@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stud_board/screen/login.dart';
+import 'package:student_board/screen/login.dart';
 
 import 'student_screens/student_home.dart';
 
